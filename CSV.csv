@@ -1,3 +1,4 @@
-"id=1126140617"," name='P3133'"," coordinatesX=100"," coordinatesY=50"," creationDate=2022-02-22"," studentsCount=26"," averageMark=3.7"," formOfEducation=FULL_TIME_EDUCATION"," semesterEnum=THIRD"," groupAdmin=Model.Person@3581c5f3"
-"id=104926193"," name='P3133'"," coordinatesX=100"," coordinatesY=50"," creationDate=2022-02-22"," studentsCount=27"," averageMark=3.7"," formOfEducation=FULL_TIME_EDUCATION"," semesterEnum=THIRD"," groupAdmin=Model.Person@6aa8ceb6"
-"id=1184190392"," name='P3133'"," coordinatesX=100"," coordinatesY=50"," creationDate=2022-02-22"," studentsCount=27"," averageMark=3.8"," formOfEducation=FULL_TIME_EDUCATION"," semesterEnum=THIRD"," groupAdmin=Model.Person@2530c12"
+id,  name,  coordinatesX,  coordinatesY,  creationDate,  studentsCount,  averageMark,  formOfEducation,  semesterEnum,  groupAdmin,  birthday,  weight,  passportID
+1860671995, P3133, 100, 50, 2022-02-23, 26, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-23T16:29:45.223548900, 90.3, 336497
+2125884863, P3133, 100, 50, 2022-02-23, 27, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-23T16:29:45.182549, 90.3, 336497
+981490811, P3133, 100, 50, 2022-02-23, 27, 3.8, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-23T16:29:45.223548900, 90.3, 336497

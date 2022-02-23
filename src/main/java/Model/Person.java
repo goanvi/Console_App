@@ -14,4 +14,12 @@ public class Person {
         this.weight = weight;
         this.passportID = passportID;
     }
+
+    @Override
+    public String toString() {
+        return  "name=" + name+
+                ", birthday=" + birthday +
+                ", weight=" + weight +
+                ", passportID=" + passportID;
+    }
 }

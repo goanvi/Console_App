@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class StudyGroup {
+public class StudyGroup implements Serializable {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -52,7 +53,7 @@ public class StudyGroup {
     @Override
     public String toString() {
         return  "id=" + id +
-                ", name='" + name + '\'' +
+                ", name=" + name  +
                 ", coordinatesX=" + coordinates.getX() +
                 ", coordinatesY=" + coordinates.getY() +
                 ", creationDate=" + creationDate +
@@ -60,7 +61,7 @@ public class StudyGroup {
                 ", averageMark=" + averageMark +
                 ", formOfEducation=" + formOfEducation +
                 ", semesterEnum=" + semesterEnum +
-                ", groupAdmin=" + groupAdmin;
+                ", groupAdmin=" + groupAdmin.toString();
     }
 }
 

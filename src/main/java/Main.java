@@ -4,7 +4,9 @@ import Model.FormOfEducation;
 import Model.Semester;
 import Model.StudyGroup;
 
+import java.io.BufferedInputStream;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class Main {
@@ -24,15 +26,9 @@ public class Main {
         collection.add(group1);
         collection.add(group2);
         collection.add(group3);
-//        try (CSVWriter writer = new CSVWriter(new FileWriter("CSV.csv", true))) {
-//            for (StudyGroup st : collection) {
-//                String[] record = st.toString().split(",");
-//                writer.writeNext(record);
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//
-//        System.out.println(collection.toString());
+        FileWorker fileWorker = new FileWorker("CSV.csv");
+        fileWorker.writer(ParserCSV.toCSV(collection));
+        System.out.println(collection);
+
     }
 }
