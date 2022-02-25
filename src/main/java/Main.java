@@ -28,6 +28,7 @@ public class Main {
         collection.add(group3);
         FileWorker fileWorker = new FileWorker("CSV.csv");
         fileWorker.writer(ParserCSV.toCSV(collection));
+        System.out.println(fileWorker.reader());
         System.out.println(collection);
 
     }
