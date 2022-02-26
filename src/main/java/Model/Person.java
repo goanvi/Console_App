@@ -1,8 +1,10 @@
 package Model;
 
+import com.opencsv.CSVReader;
+
 import java.time.LocalDateTime;
 
-public class Person {
+public class Person{
     private String name; //Поле не может быть null, Строка не может быть пустой
     private java.time.LocalDateTime birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0

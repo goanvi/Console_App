@@ -1,4 +1,4 @@
-id,  name,  coordinatesX,  coordinatesY,  creationDate,  studentsCount,  averageMark,  formOfEducation,  semesterEnum,  groupAdmin,  birthday,  weight,  passportID
-817041982, P3133, 100, 50, 2022-02-25, 26, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-25T21:38:02.774058800, 90.3, 336497
-1133564916, P3133, 100, 50, 2022-02-25, 27, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-25T21:38:02.728896300, 90.3, 336497
-1572004014, P3133, 100, 50, 2022-02-25, 27, 3.8, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-25T21:38:02.774058800, 90.3, 336497
+class,  id,  name,  coordinatesX,  coordinatesY,  creationDate,  studentsCount,  averageMark,  formOfEducation,  semesterEnum,  groupAdmin,  birthday,  weight,  passportID
+class Model.StudyGroup, 2108646615, P3133, 100, 50, 2022-02-26, 26, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-26T17:39:50.252495600, 90.3, 336497
+class Model.StudyGroup, 1496353250, P3133, 100, 50, 2022-02-26, 27, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-26T17:39:50.206497900, 90.3, 336497
+class Model.StudyGroup, 1886101592, P3133, 100, 50, 2022-02-26, 27, 3.8, FULL_TIME_EDUCATION, THIRD, Seva, 2022-02-26T17:39:50.252495600, 90.3, 336497

@@ -5,9 +5,16 @@ import Model.Semester;
 import Model.StudyGroup;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,8 +35,13 @@ public class Main {
         collection.add(group3);
         FileWorker fileWorker = new FileWorker("CSV.csv");
         fileWorker.writer(ParserCSV.toCSV(collection));
-        System.out.println(fileWorker.reader());
+        String input = fileWorker.reader();
+//        TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
         System.out.println(collection);
+//        System.out.println(collection1);
+
 
     }
+
+
 }

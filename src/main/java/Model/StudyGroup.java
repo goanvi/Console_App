@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class StudyGroup implements Serializable {
+public class StudyGroup implements Serializable,CreateObjectFromString{
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -42,6 +42,23 @@ public class StudyGroup implements Serializable {
         this.groupAdmin = person;
     }
 
+    private StudyGroup(String[] string) {
+        this.id = Integer.parseInt(string[1]);
+        this.name = string[2];
+        this.coordinates = new Coordinates(Integer.parseInt(string[3]), Integer.parseInt(string[4]));
+        this.creationDate = LocalDate.parse(string[5]);
+        this.studentsCount = Long.parseLong(string[6]);
+        this.averageMark = Double.parseDouble(string[7]);
+        this.formOfEducation = FormOfEducation.valueOf(string[8]);
+        this.semesterEnum = Semester.valueOf(string[9]);
+        this.groupAdmin = new Person(string[10], LocalDateTime.parse(string[11]), Float.parseFloat(string[12]), string[13]);
+    }
+
+    @Override
+    public Object createObjectFromString(String[] strings) {
+        return new StudyGroup(strings);
+    }
+
     public long getStudentsCount() {
         return studentsCount;
     }
@@ -52,7 +69,8 @@ public class StudyGroup implements Serializable {
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return  "class=" + getClass() +
+                ", id=" + id +
                 ", name=" + name  +
                 ", coordinatesX=" + coordinates.getX() +
                 ", coordinatesY=" + coordinates.getY() +

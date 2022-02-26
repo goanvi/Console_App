@@ -8,5 +8,8 @@ public class TreeSetCollection<T> extends TreeSet<T> {
         super(comparator);
     }
 
+    public TreeSetCollection(){
+    }
+
 
 }
