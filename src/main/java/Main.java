@@ -17,16 +17,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) { // Доделать ДР админа
         StudyGroup group1 = new StudyGroup("P3133", 100, 50, 27,
                 3.7, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
-                "Seva", LocalDateTime.now(), 90.3f, "336497");
+                "Seva", "Friday, Mar 11, 2022 12:10", 90.3f);
         StudyGroup group2 = new StudyGroup("P3133", 100, 50, 27,
                 3.8, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
-                "Seva", LocalDateTime.now(), 90.3f, "336497");
+                "Seva", "Tuesday, Aug 16, 2016 12:10", 90.3f);
         StudyGroup group3 = new StudyGroup("P3133", 100, 50, 26,
                 3.7, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
-                "Seva", LocalDateTime.now(), 90.3f, "336497");
+                "Seva", "Tuesday, Aug 16, 2016 12:10", 90.3f);
 
         Comparator<StudyGroup> sgc = new StudyGroupComparator();
         TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
@@ -36,9 +36,9 @@ public class Main {
         FileWorker fileWorker = new FileWorker("CSV.csv");
         fileWorker.writer(ParserCSV.toCSV(collection));
         String input = fileWorker.reader();
-//        TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
+        TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
         System.out.println(collection);
-//        System.out.println(collection1);
+        System.out.println(collection1);
 
 
     }

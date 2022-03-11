@@ -3,8 +3,9 @@ package Model;
 import com.opencsv.CSVReader;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-public class Person{
+public class Person{ //Разобраться с ДР админа
     private String name; //Поле не может быть null, Строка не может быть пустой
     private java.time.LocalDateTime birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0
@@ -15,6 +16,12 @@ public class Person{
         this.birthday = birthday;
         this.weight = weight;
         this.passportID = passportID;
+    }
+    public Person(String name, LocalDateTime birthday, float weight) {
+        this.name = name;
+        this.birthday = birthday;
+        this.weight = weight;
+        this.passportID = Integer.toString(Math.abs(UUID.randomUUID().hashCode()));
     }
 
     @Override

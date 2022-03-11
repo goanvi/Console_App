@@ -3,6 +3,8 @@ package Model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 public class StudyGroup implements Serializable,CreateObjectFromString{
@@ -18,7 +20,7 @@ public class StudyGroup implements Serializable,CreateObjectFromString{
 
     public StudyGroup(String name, int coordinatesX, int coordinatesY, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, String adminName,
-                      java.time.LocalDateTime adminBirthday, float adminWeight, String adminPassportID) {
+                      String adminBirthday, float adminWeight) {
         this.id = Math.abs(UUID.randomUUID().hashCode());
         this.name = name;
         this.coordinates = new Coordinates(coordinatesX, coordinatesY);
@@ -27,7 +29,8 @@ public class StudyGroup implements Serializable,CreateObjectFromString{
         this.averageMark = averageMark;
         this.formOfEducation = formOfEducation;
         this.semesterEnum = semesterEnum;
-        this.groupAdmin = new Person(adminName, adminBirthday, adminWeight, adminPassportID);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm"); //Доделать День рождения админа, придумать, как сделать запись проще
+        this.groupAdmin = new Person(adminName, LocalDateTime.parse(adminBirthday, dtf), adminWeight, Integer.toString(Math.abs(UUID.randomUUID().hashCode())));
     }
     public StudyGroup(String name, int coordinatesX, int coordinatesY, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum,Person person) {
@@ -42,7 +45,7 @@ public class StudyGroup implements Serializable,CreateObjectFromString{
         this.groupAdmin = person;
     }
 
-    private StudyGroup(String[] string) {
+    public StudyGroup(String[] string) {
         this.id = Integer.parseInt(string[1]);
         this.name = string[2];
         this.coordinates = new Coordinates(Integer.parseInt(string[3]), Integer.parseInt(string[4]));

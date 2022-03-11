@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ParserCSV {
+public class ParserCSV { // Подумать, как сделать обобщенный парсер
     public static <T> String toCSV(Collection<T> collection) {
         StringBuilder stringBuilder = new StringBuilder("");
         Object[] collArray = collection.toArray();
@@ -27,17 +27,17 @@ public class ParserCSV {
         return String.valueOf(stringBuilder);
     }
 
-//    public static TreeSetCollection<StudyGroup> csvFromData (String string){
-//        Comparator<StudyGroup> sgc = new StudyGroupComparator(); //Будут использовать в main, добовление коллекции через addAll
-//        TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
-//        String[] bigData = string.split("\n");
-//        //String[] header = bigData[0].split(",");
-//        for (int i = 1; i< bigData.length; i++ ){
-//            String[] data = bigData[i].replace(" ","").split(",");
-//            collection.add(new StudyGroup(data));
-//        }
-//        return collection;
-//    }
+    public static TreeSetCollection<StudyGroup> csvFromData (String string){
+        Comparator<StudyGroup> sgc = new StudyGroupComparator(); //Будут использовать в main, добовление коллекции через addAll
+        TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
+        String[] bigData = string.split("\n");
+        //String[] header = bigData[0].split(",");
+        for (int i = 1; i< bigData.length; i++ ){
+            String[] data = bigData[i].replace(" ","").split(",");
+            collection.add(new StudyGroup(data));
+        }
+        return collection;
+    }
 
 //    public static  <T extends CreateObjectFromString> TreeSetCollection<T>  csvFromData (String string){
 //        TreeSetCollection<T> collection = new TreeSetCollection<>();
@@ -69,7 +69,7 @@ public class ParserCSV {
 //        return object;
 //    }
 //
-//    private static Object[] fromStudyGroup (String[] string){
+//    private static StudyGroup fromStudyGroup (String[] string){
 //        Object[] obj = new Object[10];
 //        obj[0]= string[0];
 //        obj[1]= Integer.parseInt(string[1]);
@@ -81,7 +81,9 @@ public class ParserCSV {
 //        obj[7]= FormOfEducation.valueOf(string[8]);
 //        obj[8]= Semester.valueOf(string[9]);
 //        obj[9]= new Person(string[10], LocalDateTime.parse(string[11]), Float.parseFloat(string[12]), string[13]);
-//        return obj;
+//        return new StudyGroup(string[0],Integer.parseInt(string[1]),string[2],Integer.parseInt(string[3]),Integer.parseInt(string[4]),
+//                LocalDate.parse(string[5]),Long.parseLong(string[6]),Double.parseDouble(string[7]),FormOfEducation.valueOf(string[8]),
+//                Semester.valueOf(string[9]),string[10],LocalDateTime.parse(string[11]),Float.parseFloat(string[12]),string[13]);
 //    }
 
 
