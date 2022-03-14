@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
-public class StudyGroup implements Serializable,CreateObjectFromString{
+public class StudyGroup implements Serializable,CreateObjectFromString{ //Потребуется переделать конструкторы для корректной работы по ТЗ
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null

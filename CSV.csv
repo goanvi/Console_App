@@ -1,4 +1,4 @@
 class,  id,  name,  coordinatesX,  coordinatesY,  creationDate,  studentsCount,  averageMark,  formOfEducation,  semesterEnum,  groupAdmin,  birthday,  weight,  passportID
-class Model.StudyGroup, 210388073, P3133, 100, 50, 2022-03-11, 26, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2016-08-16T12:10, 90.3, 863661904
-class Model.StudyGroup, 240885178, P3133, 100, 50, 2022-03-11, 27, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-03-11T12:10, 90.3, 210642837
-class Model.StudyGroup, 391729529, P3133, 100, 50, 2022-03-11, 27, 3.8, FULL_TIME_EDUCATION, THIRD, Seva, 2016-08-16T12:10, 90.3, 97759221
+class Model.StudyGroup, 1474275314, P3133, 100, 50, 2022-03-14, 26, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2016-08-16T12:10, 90.3, 966850265
+class Model.StudyGroup, 2135045440, P3133, 100, 50, 2022-03-14, 27, 3.7, FULL_TIME_EDUCATION, THIRD, Seva, 2022-03-11T12:10, 90.3, 1476965268
+class Model.StudyGroup, 727881968, P3133, 100, 50, 2022-03-14, 27, 3.8, FULL_TIME_EDUCATION, THIRD, Seva, 2016-08-16T12:10, 90.3, 1674874778

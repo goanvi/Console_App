@@ -1,7 +1,7 @@
 package View.Commands;
 
 public interface Command {
-    String getDescroption();
+    String getDescription();
     String getName();
     boolean execute (String argument);
 }

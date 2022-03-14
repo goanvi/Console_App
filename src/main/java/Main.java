@@ -1,8 +1,10 @@
 import Controller.StudyGroupComparator;
 import Controller.TreeSetCollection;
+import Model.Exceptions.IncorrectNameEnumException;
 import Model.FormOfEducation;
 import Model.Semester;
 import Model.StudyGroup;
+import View.ConsoleClient.ConsoleClient;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -17,6 +19,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
+
+    /*Переделать реализацию задания ID в StudyGroup
+    * написать остальные вспомогательные классы для классов команд
+    * потребуется переписать конструкторы для StudyGroup, чтобы Person мог быть null
+    * при проверке работоспособности программы отловить все оставшиеся ошибки
+    * спросить про LocalDateTime и обобщить все заметки в классах здесь
+    * почистить классы от мусора*/
+
     public static void main(String[] args) { // Доделать ДР админа
         StudyGroup group1 = new StudyGroup("P3133", 100, 50, 27,
                 3.7, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
@@ -39,7 +49,6 @@ public class Main {
         TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
         System.out.println(collection);
         System.out.println(collection1);
-
 
     }
 

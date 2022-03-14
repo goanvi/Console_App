@@ -5,7 +5,7 @@ import com.opencsv.CSVReader;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Person{ //Разобраться с ДР админа
+public class Person{ // Помнить что этот класс может бить null, переделать конструкторы при необходимости
     private String name; //Поле не может быть null, Строка не может быть пустой
     private java.time.LocalDateTime birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0

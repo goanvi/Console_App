@@ -1,58 +1,87 @@
 package View;
 
 import Model.*;
+import Model.Exceptions.CannotBeNullException;
+import Model.Exceptions.GoingBeyondLimitsException;
+import Model.Exceptions.IncorrectNameEnumException;
+import Model.Exceptions.IncorrectScriptException;
 import View.ConsoleClient.ConsoleClient;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class Asker { // Проверить все ограничения на переменные, написать исключения для каждого метода
+public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости
     private Scanner userScan;
     private boolean fileMode;
     private final int MAX_COORD_X = 811;
+    private final int MIN_STUDENTS_COUNT = 0;
+    private final int MIN_AVERAGE_MARK = 0;
+    private final int MIN_WEIGHT_ADMIN = 0;
 
     public Asker(Scanner usr) {
         this.userScan = usr;
         fileMode = false;
     }
 
-    public String askName() { //Написать исключения
+    public String askName() throws IncorrectScriptException {
         String name;
         while (true) {
             try {
                 ConsoleClient.println("Введите имя");
                 name = userScan.nextLine().trim();
                 if (fileMode) ConsoleClient.println(name);
-                /*if (name.equals("")) Написать исключения*/
+                if (name.equals("")) throw new CannotBeNullException();
                 break;
-            } catch (Exception ex) { //Обработать исключения
-                System.out.println(ex.getMessage());
+            } catch (CannotBeNullException exception) { //Обработать исключения
+                ConsoleClient.printError(exception.getMessage());
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
+
         }
         return name;
     }
 
-    public Integer askCoordinateX() { //Написать исключения
+    public Integer askCoordinateX() throws IncorrectScriptException {
         String strX;
         Integer x;
         while (true) {
             try {
-                ConsoleClient.println("Введите координату X");
+                ConsoleClient.println("Введите координату X.");
+                ConsoleClient.println("Максимальное значение координаты X = " + MAX_COORD_X);
                 strX = userScan.nextLine().trim();
                 if (fileMode) ConsoleClient.println(strX);
-                /*if (strX.equals("")) Написать исключения*/
+                if (strX.equals("")) throw new CannotBeNullException();
                 x = Integer.parseInt(strX);
-                /*if (x > MAX_COORD_X) Написать исключения*/
+                if (x > MAX_COORD_X) throw new GoingBeyondLimitsException();
                 break;
-            } catch (Exception ex) { //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (CannotBeNullException exception) {
+                ConsoleClient.printError(exception.getMessage());
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (GoingBeyondLimitsException exception){
+                ConsoleClient.printError(exception.getMessage());
+                ConsoleClient.println("Максимальное значение координаты X = " + MAX_COORD_X);
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (NumberFormatException exception){
+                ConsoleClient.printError("Значением поля должно являться число!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return x;
     }
 
-    public int askCoordinateY() { //Написать исключения (?)
+    public int askCoordinateY() throws IncorrectScriptException {
         String strY;
         int y;
         while (true) {
@@ -63,152 +92,222 @@ public class Asker { // Проверить все ограничения на п
                 y = Integer.parseInt(strY);
                 break;
             }
-            catch (Exception ex){ //Обработать исключения (?)
-                System.out.println(ex.getMessage());
+            catch (NumberFormatException exception){
+                ConsoleClient.printError("Значением поля должно являться число!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return y;
     }
 
-    public Coordinates askCoordinates(){ //Написать исключения (?)
+    public Coordinates askCoordinates() throws IncorrectScriptException{
         Integer x = askCoordinateX();
         int y = askCoordinateY();
         return new Coordinates(x,y);
     }
 
-    public long askStudentsCount(){ //Написать исключения
+    public long askStudentsCount() throws IncorrectScriptException{
         String srtStud;
         long stud;
         while (true){
             try {
-                ConsoleClient.println("Введите количество студентов в группе");
+                ConsoleClient.println("Введите количество студентов в группе.");
+                ConsoleClient.println("Значение должно быть больше " + MIN_STUDENTS_COUNT);
                 srtStud = userScan.nextLine().trim();
                 if (fileMode) ConsoleClient.println(srtStud);
                 stud = Long.parseLong(srtStud);
-                /*if (stud<=0) Написать исключения */
+                if (stud<=0) throw new GoingBeyondLimitsException();
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (GoingBeyondLimitsException exception){
+                ConsoleClient.printError(exception.getMessage());
+                ConsoleClient.println("Значение должно быть больше " + MIN_STUDENTS_COUNT);
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (NumberFormatException exception){
+                ConsoleClient.printError("Значением поля должно являться число!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return stud;
     }
 
-    public double askAverageMark(){ //Написать исключения
+    public double askAverageMark() throws IncorrectScriptException{
         String strMark;
         double mark;
         while (true){
             try {
-                ConsoleClient.println("Введите среднюю оценку в группе");
+                ConsoleClient.println("Введите среднюю оценку в группе.");
+                ConsoleClient.println("Значение должно быть больше " + MIN_AVERAGE_MARK);
                 strMark = userScan.nextLine().trim();
                 if (fileMode) ConsoleClient.println(strMark);
                 mark = Double.parseDouble(strMark);
-                /*if (mark<=0) Написать исключения */
+                if (mark<=0) throw new GoingBeyondLimitsException();
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (GoingBeyondLimitsException exception){
+                ConsoleClient.printError(exception.getMessage());
+                ConsoleClient.println("Значение должно быть больше " + MIN_AVERAGE_MARK);
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (NumberFormatException exception){
+                ConsoleClient.printError("Значением поля должно являться число!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return mark;
     }
 
-    public FormOfEducation askFromOfEducation(){ //Написать исключения
+    public FormOfEducation askFromOfEducation() throws IncorrectScriptException{
         String strEduc;
         FormOfEducation educ;
         while (true){
             try {
                 ConsoleClient.println("Введите форму обучения");
+                ConsoleClient.println("Доступные формы обучения: Distance, Full time, Evening");
                 strEduc = userScan.nextLine().trim();
-                /*if(strEduc.equals("")) Написать исключения */
+                if(strEduc.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strEduc);
-                educ = FormOfEducation.valueOf(strEduc); // Стоит добавить enum имя и реализовывать через них
+                educ = FormOfEducation.equals(strEduc);
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (IncorrectNameEnumException exception){
+                ConsoleClient.printError("Введено неправильное имя формы обучения!");
+                ConsoleClient.println("Доступные формы обучения: Distance, Full time, Evening");
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (CannotBeNullException exception) {
+                ConsoleClient.printError(exception.getMessage());
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return educ;
     }
 
-    public Semester askSemester(){ //Написать исключения
+    public Semester askSemester() throws IncorrectScriptException{
         String strSem;
         Semester sem;
         while (true){
             try {
                 ConsoleClient.println("Введите семестр обучения");
+                ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
                 strSem = userScan.nextLine().trim();
-                /*if(strEduc.equals("")) Написать исключения */
+                if(strSem.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strSem);
-                sem= Semester.valueOf(strSem); // Стоит добавить enum имя и реализовывать через них
+                sem= Semester.equals(strSem);
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (IncorrectNameEnumException exception){
+                ConsoleClient.printError("Введено неправильное имя семестра обучения!");
+                ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (CannotBeNullException exception) {
+                ConsoleClient.printError(exception.getMessage());
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return sem;
     }
 
-    public String askAdminName(){ //Написать исключения
+    public String askAdminName() throws IncorrectScriptException{
         String admin;
         while (true){
             try {
                 ConsoleClient.println("Введите имя админа");
                 admin = userScan.nextLine().trim();
+                if (admin.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(admin);
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (CannotBeNullException exception){
+                ConsoleClient.printError(exception.getMessage());
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return admin;
     }
 
-    public LocalDateTime askAdminBirthday(){ //Написать исключения
+    public LocalDateTime askAdminBirthday() throws IncorrectScriptException{
         String strTime;
         LocalDateTime time;
         while (true){
             try {
-                ConsoleClient.println("Введите день рождения админа: ГГГГ-ММ-ДД");
-                strTime = userScan.nextLine().trim(); // переделать в StudyGroup способ задания дня рождения
+                ConsoleClient.println("Введите день рождения админа.");
+                ConsoleClient.println("Шаблон ввода: день недели, месяц день, год час:минута");
+                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
+                strTime = userScan.nextLine().trim();
+                if (strTime.equals("")) time = null;
+                else time = LocalDateTime.parse(strTime);
                 if (fileMode) ConsoleClient.println(strTime);
-                time = LocalDateTime.parse(strTime);
                 break;
             }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            catch (DateTimeParseException exception){ //Обработать исключения
+                ConsoleClient.printError("Некорректный ввод даты рождения!");
+                ConsoleClient.println("Обратите внимание на ввод дня недели и месяца с заглавной буквы и сокращение названия месяца 3 буквами!");
+                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return time;
     }
 
-    public float askAdminWeight(){//Написать исключения
+    public float askAdminWeight()throws IncorrectScriptException{
         String strWeight;
         float weight;
         while (true){
             try {
                 ConsoleClient.println("Введите вес админа");
+                ConsoleClient.println("Значение поля должно быть больше " + MIN_WEIGHT_ADMIN);
                 strWeight = userScan.nextLine().trim();
-                if (fileMode) ConsoleClient.println(strWeight); //Переделать реализацию задания ID в StudyGroup
+                if (fileMode) ConsoleClient.println(strWeight);
                 weight = Float.parseFloat(strWeight);
+                if (weight<=0f) throw new GoingBeyondLimitsException();
                 break;
-            }
-            catch (Exception ex){ //Обработать исключения
-                System.out.println(ex.getMessage());
+            }catch (NumberFormatException exception){
+                ConsoleClient.printError("Значением поля должно являться число!");
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (GoingBeyondLimitsException exception){
+                ConsoleClient.printError(exception.getMessage());
+                ConsoleClient.println("Значение поля должно быть больше " + MIN_WEIGHT_ADMIN);
+                if (fileMode) throw new IncorrectScriptException();
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
             }
         }
         return weight;
     }
 
-    public Person askPerson(){
+    public Person askPerson() throws IncorrectScriptException{
         String adminName = askAdminName();
         LocalDateTime adminBirthday = askAdminBirthday();
         float adminWeight = askAdminWeight();
         String adminID = Integer.toString(Math.abs(UUID.randomUUID().hashCode()));
         return new Person(adminName,adminBirthday,adminWeight,adminID);
+    }
+
+    public void setFileMode() {
+        fileMode = true;
+    }
+
+
+    public void setUserMode() {
+        fileMode = false;
     }
 }

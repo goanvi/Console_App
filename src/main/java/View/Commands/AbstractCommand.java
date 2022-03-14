@@ -1,7 +1,5 @@
 package View.Commands;
 
-import java.util.Objects;
-
 public abstract class AbstractCommand implements Command{
     private String name;
     private String description;
@@ -12,7 +10,7 @@ public abstract class AbstractCommand implements Command{
     }
 
     @Override
-    public String getDescroption() {
+    public String getDescription() {
         return description;
     }
 
@@ -27,15 +25,15 @@ public abstract class AbstractCommand implements Command{
     }
 
     @Override
+    public int hashCode() {
+        return name.hashCode()+ description.hashCode();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractCommand that = (AbstractCommand) o;
         return name.equals(that.name) && description.equals(that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode()+ description.hashCode();
     }
 }
