@@ -1,14 +1,13 @@
 package View;
 
 import Model.*;
-import Model.Exceptions.CannotBeNullException;
-import Model.Exceptions.GoingBeyondLimitsException;
-import Model.Exceptions.IncorrectNameEnumException;
-import Model.Exceptions.IncorrectScriptException;
+import Model.Exceptions.*;
 import View.ConsoleClient.ConsoleClient;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.UUID;
@@ -20,22 +19,25 @@ public class Asker { // Кажется закончил, останется то
     private final int MIN_STUDENTS_COUNT = 0;
     private final int MIN_AVERAGE_MARK = 0;
     private final int MIN_WEIGHT_ADMIN = 0;
+    private boolean personExist;
 
     public Asker(Scanner usr) {
         this.userScan = usr;
         fileMode = false;
+        personExist = true;
     }
+
 
     public String askName() throws IncorrectScriptException {
         String name;
         while (true) {
             try {
-                ConsoleClient.println("Введите имя");
+                ConsoleClient.println("Введите название группы");
                 name = userScan.nextLine().trim();
                 if (fileMode) ConsoleClient.println(name);
-                if (name.equals("")) throw new CannotBeNullException();
+                if (name.equals("")||name.equalsIgnoreCase("null"))throw new CannotBeNullException();
                 break;
-            } catch (CannotBeNullException exception) { //Обработать исключения
+            } catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
                 if (fileMode) throw new IncorrectScriptException();
             } catch (NoSuchElementException exception){
@@ -249,15 +251,16 @@ public class Asker { // Кажется закончил, останется то
                 ConsoleClient.println("Шаблон ввода: день недели, месяц день, год час:минута");
                 ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
                 strTime = userScan.nextLine().trim();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm");
                 if (strTime.equals("")) time = null;
-                else time = LocalDateTime.parse(strTime);
+                else time = LocalDateTime.parse(strTime,dtf);
                 if (fileMode) ConsoleClient.println(strTime);
                 break;
             }
             catch (DateTimeParseException exception){ //Обработать исключения
                 ConsoleClient.printError("Некорректный ввод даты рождения!");
                 ConsoleClient.println("Обратите внимание на ввод дня недели и месяца с заглавной буквы и сокращение названия месяца 3 буквами!");
-                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
+                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10"); //не надо
                 if (fileMode) throw new IncorrectScriptException();
             }catch (IllegalStateException exception){
                 ConsoleClient.printError("Непредвиденная ошибка!");
@@ -295,11 +298,33 @@ public class Asker { // Кажется закончил, останется то
     }
 
     public Person askPerson() throws IncorrectScriptException{
-        String adminName = askAdminName();
-        LocalDateTime adminBirthday = askAdminBirthday();
-        float adminWeight = askAdminWeight();
-        String adminID = Integer.toString(Math.abs(UUID.randomUUID().hashCode()));
-        return new Person(adminName,adminBirthday,adminWeight,adminID);
+        Person person = null;
+        while (true) {
+            try {
+                ConsoleClient.println("Вы хотите указать админа группы? Y/N");
+                String answer = userScan.nextLine().trim();
+                if (answer.equalsIgnoreCase("Y")) { // поставить LowerCase
+                    setPersonExists();
+                    String adminName = askAdminName();
+                    LocalDateTime adminBirthday = askAdminBirthday();
+                    float adminWeight = askAdminWeight();
+                    String adminID = Integer.toString(Math.abs(UUID.randomUUID().hashCode()));
+                    person = new Person(adminName, adminBirthday, adminWeight, adminID);
+                }
+                else if (answer.equalsIgnoreCase("N")) {
+                    setPersonDoesntExist();
+                }
+                else throw new IncorrectInputException();
+                break;
+            }catch (IncorrectInputException exception) {
+                ConsoleClient.printError("Некорректный ввод ответа!");
+                ConsoleClient.println("Введите Y, если согласный и N, если не согласны!");
+            }catch (IllegalStateException exception){
+                ConsoleClient.printError("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return person;
     }
 
     public void setFileMode() {
@@ -309,5 +334,18 @@ public class Asker { // Кажется закончил, останется то
 
     public void setUserMode() {
         fileMode = false;
+    }
+
+
+    public boolean getPersonExist() {
+        return personExist;
+    }
+
+    public void setPersonExists(){
+        personExist = true;
+    }
+
+    public void setPersonDoesntExist(){
+        personExist = false;
     }
 }

@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ParserCSV { // Подумать, как сделать обобщенный парсер
-    public static <T> String toCSV(Collection<T> collection) {
+    public static String toCSV(Collection<StudyGroup> collection) {
         StringBuilder stringBuilder = new StringBuilder("");
         Object[] collArray = collection.toArray();
-        String[] header = makeHeader(collArray[0]);
+        String[] header = makeStudyGroupHeader();
         stringBuilder.append(Arrays.toString(header).replace("[","").replace("]",""));
         stringBuilder.append("\n");
         for (Object obj : collArray) {
@@ -86,7 +86,10 @@ public class ParserCSV { // Подумать, как сделать обобще
 //                Semester.valueOf(string[9]),string[10],LocalDateTime.parse(string[11]),Float.parseFloat(string[12]),string[13]);
 //    }
 
-
+    private static String[] makeStudyGroupHeader(){
+        return new String[]{"class",  "id",  "name",  "coordinatesX",  "coordinatesY",  "creationDate",
+                "studentsCount",  "averageMark",  "formOfEducation",  "semesterEnum",  "groupAdmin",  "birthday",  "weight",  "passportID"};
+    }
 
     private static String[] makeHeader(Object object) {
         String[] recordHd = object.toString().split(",");
@@ -100,7 +103,7 @@ public class ParserCSV { // Подумать, как сделать обобще
 
     private static String[] makeData(Object object) {
         String[] recordDt = object.toString().split(",");
-        String[] data = new String[recordDt.length];
+        String[] data = new String[14];
         for (int i = 0; i < recordDt.length; i++) {
             String[] sword = recordDt[i].split("=");
             data[i] = sword[sword.length -1];

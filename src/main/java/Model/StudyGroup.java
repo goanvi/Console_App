@@ -1,10 +1,14 @@
 package Model;
 
+import View.Asker;
+
+import java.io.Console;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class StudyGroup implements Serializable,CreateObjectFromString{ //Потребуется переделать конструкторы для корректной работы по ТЗ
@@ -18,12 +22,12 @@ public class StudyGroup implements Serializable,CreateObjectFromString{ //Пот
     private Semester semesterEnum; //Поле не может быть null
     private Person groupAdmin; //Поле может быть null
 
-    public StudyGroup(String name, int coordinatesX, int coordinatesY, long studentsCount,
+    public StudyGroup(String name, Coordinates coordinates, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, String adminName,
                       String adminBirthday, float adminWeight) {
         this.id = Math.abs(UUID.randomUUID().hashCode());
         this.name = name;
-        this.coordinates = new Coordinates(coordinatesX, coordinatesY);
+        this.coordinates = coordinates;
         this.creationDate = LocalDate.now();
         this.studentsCount = studentsCount;
         this.averageMark = averageMark;
@@ -32,11 +36,11 @@ public class StudyGroup implements Serializable,CreateObjectFromString{ //Пот
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm"); //Доделать День рождения админа, придумать, как сделать запись проще
         this.groupAdmin = new Person(adminName, LocalDateTime.parse(adminBirthday, dtf), adminWeight, Integer.toString(Math.abs(UUID.randomUUID().hashCode())));
     }
-    public StudyGroup(String name, int coordinatesX, int coordinatesY, long studentsCount,
+    public StudyGroup(String name, Coordinates coordinates, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum,Person person) {
         this.id = Math.abs(UUID.randomUUID().hashCode());
         this.name = name;
-        this.coordinates = new Coordinates(coordinatesX, coordinatesY);
+        this.coordinates = coordinates;
         this.creationDate = LocalDate.now();
         this.studentsCount = studentsCount;
         this.averageMark = averageMark;
@@ -54,7 +58,18 @@ public class StudyGroup implements Serializable,CreateObjectFromString{ //Пот
         this.averageMark = Double.parseDouble(string[7]);
         this.formOfEducation = FormOfEducation.valueOf(string[8]);
         this.semesterEnum = Semester.valueOf(string[9]);
-        this.groupAdmin = new Person(string[10], LocalDateTime.parse(string[11]), Float.parseFloat(string[12]), string[13]);
+        if (!string[10].equals("null")) {
+            if (!string[11].equalsIgnoreCase("null")){
+            this.groupAdmin = new Person(string[10],
+                LocalDateTime.parse(string[11]), Float.parseFloat(string[12]), string[13]);
+            }
+            else {
+                this.groupAdmin = new Person(string[10],
+                        null, Float.parseFloat(string[12]), string[13]);
+            }
+
+        }
+        else groupAdmin = null;
     }
 
     @Override
@@ -72,17 +87,34 @@ public class StudyGroup implements Serializable,CreateObjectFromString{ //Пот
 
     @Override
     public String toString() {
-        return  "class=" + getClass() +
-                ", id=" + id +
-                ", name=" + name  +
-                ", coordinatesX=" + coordinates.getX() +
-                ", coordinatesY=" + coordinates.getY() +
-                ", creationDate=" + creationDate +
-                ", studentsCount=" + studentsCount +
-                ", averageMark=" + averageMark +
-                ", formOfEducation=" + formOfEducation +
-                ", semesterEnum=" + semesterEnum +
-                ", groupAdmin=" + groupAdmin.toString();
+        String ret = "";
+        if (groupAdmin == null){
+            ret = "class=" + getClass() +
+                    ", id=" + id +
+                    ", name=" + name  +
+                    ", coordinatesX=" + coordinates.getX() +
+                    ", coordinatesY=" + coordinates.getY() +
+                    ", creationDate=" + creationDate +
+                    ", studentsCount=" + studentsCount +
+                    ", averageMark=" + averageMark +
+                    ", formOfEducation=" + formOfEducation +
+                    ", semesterEnum=" + semesterEnum +
+                    ", groupAdmin=null";
+        }
+        else {
+            ret = "class=" + getClass() +
+                    ", id=" + id +
+                    ", name=" + name  +
+                    ", coordinatesX=" + coordinates.getX() +
+                    ", coordinatesY=" + coordinates.getY() +
+                    ", creationDate=" + creationDate +
+                    ", studentsCount=" + studentsCount +
+                    ", averageMark=" + averageMark +
+                    ", formOfEducation=" + formOfEducation +
+                    ", semesterEnum=" + semesterEnum +
+                    ", groupAdmin=" + groupAdmin.toString();
+        }
+        return ret;
     }
 }
 
