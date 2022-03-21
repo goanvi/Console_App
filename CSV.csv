@@ -1,3 +1,3 @@
 class, id, name, coordinatesX, coordinatesY, creationDate, studentsCount, averageMark, formOfEducation, semesterEnum, groupAdmin, birthday, weight, passportID
-class Model.StudyGroup, 737341091, P3132, 525, 85, 2022-03-19, 23, 4.4, FULL_TIME_EDUCATION, FIFTH, sema, null, 76.0, 822134054
-class Model.StudyGroup, 1226555374, p3131, 42, 42, 2022-03-19, 43, 5.0, DISTANCE_EDUCATION, THIRD, null, null, null, null
+class Model.StudyGroup, 1275194544, P2122, 811, 2, 2022-03-20, 4, 6.0, DISTANCE_EDUCATION, THIRD, null, null, null, null
+class Model.StudyGroup, 420398613, P212, 12, 2, 2022-03-20, 412, 42.0, FULL_TIME_EDUCATION, FIFTH, sae, 2022-03-11T10:00, 32.0, 1482024892

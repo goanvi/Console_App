@@ -14,18 +14,13 @@ import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
 
-    /*Переделать реализацию задания ID в StudyGroup,
-    * написать остальные вспомогательные классы для классов команд,
-    * потребуется переписать конструкторы для StudyGroup, чтобы Person мог быть null,
+    /*написать остальные вспомогательные классы для классов команд,
     * при проверке работоспособности программы отловить все оставшиеся ошибки,
     * спросить про LocalDateTime и обобщить все заметки в классах здесь,
     * почистить классы от мусора,
@@ -41,27 +36,28 @@ public class Main {
 //        StudyGroup group3 = new StudyGroup("P3133", 100, 50, 26,
 //                3.7, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
 //                "Seva", "Tuesday, Aug 16, 2016 12:10", 90.3f);
-        try {
-            Comparator<StudyGroup> sgc = new StudyGroupComparator();
-            TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
-            Asker asker = new Asker(new Scanner(System.in));
-            StudyGroup group11 = new StudyGroup(asker.askName(),asker.askCoordinates(),
-                    asker.askStudentsCount(),asker.askAverageMark(),asker.askFromOfEducation(),asker.askSemester(),asker.askPerson());
-            StudyGroup group12 = new StudyGroup(asker.askName(),asker.askCoordinates(),
-                    asker.askStudentsCount(),asker.askAverageMark(),asker.askFromOfEducation(),asker.askSemester(),asker.askPerson());
-            System.out.println(group11);
-            System.out.println(group12);
-            collection.add(group11);
-            collection.add(group12);
-            FileWorker fileWorker = new FileWorker("CSV.csv");
-            fileWorker.writer(ParserCSV.toCSV(collection));
-            String input = fileWorker.reader();
-            TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
-            System.out.println(collection);
-            System.out.println(collection1);
-        } catch (IncorrectScriptException e) {
-            ConsoleClient.printError("gg");
-        }
+//        try {
+//            Comparator<StudyGroup> sgc = new StudyGroupComparator();
+//            TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
+//            Asker asker = new Asker(new Scanner(System.in));
+//            StudyGroup group11 = new StudyGroup(asker.askName(),asker.askCoordinates(),
+//                    asker.askStudentsCount(),asker.askAverageMark(),asker.askFromOfEducation(),asker.askSemester(),asker.askPerson());
+//            StudyGroup group12 = new StudyGroup(asker.askName(),asker.askCoordinates(),
+//                    asker.askStudentsCount(),asker.askAverageMark(),asker.askFromOfEducation(),asker.askSemester(),asker.askPerson());
+//            System.out.println(group11);
+//            System.out.println(group12);
+//            collection.add(group11);
+//            collection.add(group12);
+//            FileWorker fileWorker = new FileWorker("CSV.csv");
+//            fileWorker.writer(ParserCSV.toCSV(collection));
+//            String input = fileWorker.reader();
+//            TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
+//            System.out.println(collection);
+//            System.out.println(collection1);
+//        } catch (IncorrectScriptException e) {
+//            ConsoleClient.printError("gg");
+//        }
+
 //        LocalDateTime localDateTime;
 //        String time = "                    Saturday, Mar 19, 2022 17:25";
 //        String time1 = "Friday, Mar 11, 2022 12:10";

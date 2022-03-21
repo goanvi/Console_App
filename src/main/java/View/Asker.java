@@ -70,7 +70,6 @@ public class Asker { // Кажется закончил, останется то
                 if (fileMode) throw new IncorrectScriptException();
             }catch (GoingBeyondLimitsException exception){
                 ConsoleClient.printError(exception.getMessage());
-                ConsoleClient.println("Максимальное значение координаты X = " + MAX_COORD_X);
                 if (fileMode) throw new IncorrectScriptException();
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
@@ -125,7 +124,6 @@ public class Asker { // Кажется закончил, останется то
                 break;
             }catch (GoingBeyondLimitsException exception){
                 ConsoleClient.printError(exception.getMessage());
-                ConsoleClient.println("Значение должно быть больше " + MIN_STUDENTS_COUNT);
                 if (fileMode) throw new IncorrectScriptException();
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
@@ -152,7 +150,6 @@ public class Asker { // Кажется закончил, останется то
                 break;
             }catch (GoingBeyondLimitsException exception){
                 ConsoleClient.printError(exception.getMessage());
-                ConsoleClient.println("Значение должно быть больше " + MIN_AVERAGE_MARK);
                 if (fileMode) throw new IncorrectScriptException();
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
@@ -179,7 +176,6 @@ public class Asker { // Кажется закончил, останется то
                 break;
             }catch (IncorrectNameEnumException exception){
                 ConsoleClient.printError("Введено неправильное имя формы обучения!");
-                ConsoleClient.println("Доступные формы обучения: Distance, Full time, Evening");
                 if (fileMode) throw new IncorrectScriptException();
             }catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
@@ -206,7 +202,6 @@ public class Asker { // Кажется закончил, останется то
                 break;
             }catch (IncorrectNameEnumException exception){
                 ConsoleClient.printError("Введено неправильное имя семестра обучения!");
-                ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
                 if (fileMode) throw new IncorrectScriptException();
             }catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
@@ -260,7 +255,6 @@ public class Asker { // Кажется закончил, останется то
             catch (DateTimeParseException exception){ //Обработать исключения
                 ConsoleClient.printError("Некорректный ввод даты рождения!");
                 ConsoleClient.println("Обратите внимание на ввод дня недели и месяца с заглавной буквы и сокращение названия месяца 3 буквами!");
-                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10"); //не надо
                 if (fileMode) throw new IncorrectScriptException();
             }catch (IllegalStateException exception){
                 ConsoleClient.printError("Непредвиденная ошибка!");
@@ -287,7 +281,6 @@ public class Asker { // Кажется закончил, останется то
                 if (fileMode) throw new IncorrectScriptException();
             }catch (GoingBeyondLimitsException exception){
                 ConsoleClient.printError(exception.getMessage());
-                ConsoleClient.println("Значение поля должно быть больше " + MIN_WEIGHT_ADMIN);
                 if (fileMode) throw new IncorrectScriptException();
             }catch (IllegalStateException exception){
                 ConsoleClient.printError("Непредвиденная ошибка!");
