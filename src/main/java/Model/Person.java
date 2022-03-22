@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Person implements IdManager{ // Помнить что этот класс может бить null, переделать конструкторы при необходимости
+public class Person{ // Помнить что этот класс может бить null, переделать конструкторы при необходимости
     private String name; //Поле не может быть null, Строка не может быть пустой
     private java.time.LocalDateTime birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0
@@ -25,27 +25,8 @@ public class Person implements IdManager{ // Помнить что этот кл
         this.name = name;
         this.birthday = birthday;
         this.weight = weight;
-        this.passportID = Integer.toString(setID(Math.abs(UUID.randomUUID().hashCode())));
-        saveID(Integer.parseInt(passportID));
-    }
-
-    @Override
-    public int setID(Integer id) {
-        int passportID0 = id;
-        while (true){
-            if (idPersonBuffer.contains(passportID0)) {
-                passportID0=changeId(passportID0);
-            }
-            else {
-                break;
-            }
-        }
-        return passportID0;
-    }
-
-    @Override
-    public void saveID(Integer id) {
-        idPersonBuffer.add(id);
+        this.passportID = Integer.toString(IdManager.setPersonID(Math.abs(UUID.randomUUID().hashCode())));
+        IdManager.savePersonID(Integer.parseInt(passportID));
     }
 
     @Override

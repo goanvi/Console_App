@@ -1,5 +1,6 @@
+package Controller;
+
 import Controller.StudyGroupComparator;
-import Controller.TreeSetCollection;
 import Model.*;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ParserCSV { // Подумать, как сделать обобщенный парсер
-    public static String toCSV(Collection<StudyGroup> collection) {
+    public String toCSV(Collection<StudyGroup> collection) {
         StringBuilder stringBuilder = new StringBuilder("");
         Object[] collArray = collection.toArray();
         String[] header = makeStudyGroupHeader();
@@ -27,9 +28,9 @@ public class ParserCSV { // Подумать, как сделать обобще
         return String.valueOf(stringBuilder);
     }
 
-    public static TreeSetCollection<StudyGroup> csvFromData (String string){
+    public TreeSet<StudyGroup> csvFromData (String string){
         Comparator<StudyGroup> sgc = new StudyGroupComparator(); //Будут использовать в main, добовление коллекции через addAll
-        TreeSetCollection<StudyGroup> collection = new TreeSetCollection<>(sgc);
+        TreeSet<StudyGroup> collection = new TreeSet<>(sgc);
         String[] bigData = string.split("\n");
         //String[] header = bigData[0].split(",");
         for (int i = 1; i< bigData.length; i++ ){

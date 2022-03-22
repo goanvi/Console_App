@@ -1,32 +1,35 @@
-import Controller.StudyGroupComparator;
-import Controller.TreeSetCollection;
-import Model.*;
-import Model.Exceptions.IncorrectInputException;
+import Controller.CollectionManager;
+import Controller.FileWorker;
+import Controller.ParserCSV;
 import Model.Exceptions.IncorrectNameEnumException;
-import Model.Exceptions.IncorrectScriptException;
-import View.Asker;
+import Model.Semester;
+import Model.StudyGroup;
 import View.ConsoleClient.ConsoleClient;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.TreeSet;
 
 public class Main {
 
-    /*написать остальные вспомогательные классы для классов команд,
+    /*переписать IdManager, коллекция должна быть одна на все объекты,
+    * написать остальные вспомогательные классы для классов команд,
     * при проверке работоспособности программы отловить все оставшиеся ошибки,
     * спросить про LocalDateTime и обобщить все заметки в классах здесь,
     * почистить классы от мусора,
-    * Дописать исключения для FileWorker */
+    * Дописать исключения для Controller.FileWorker */
 
     public static void main(String[] args) { // Доделать ДР админа
+//        try {
+
+        FileWorker fileWorker = new FileWorker("CSV.csv");
+        ParserCSV parser = new ParserCSV();
+        CollectionManager collectionManager = new CollectionManager(fileWorker);
+        TreeSet<StudyGroup> coll = parser.csvFromData(fileWorker.reader());
+        collectionManager.addCollection(coll);
+            //System.out.println(collectionManager.removeGreater());
+//        }
+//        catch (IncorrectNameEnumException exception){
+//            ConsoleClient.printError("gg");
+//        }
 //        StudyGroup group1 = new StudyGroup("P3133", 100, 50, 27,
 //                3.7, FormOfEducation.FULL_TIME_EDUCATION, Semester.THIRD,
 //                "Seva", "Friday, Mar 11, 2022 12:10", 90.3f);
@@ -48,10 +51,10 @@ public class Main {
 //            System.out.println(group12);
 //            collection.add(group11);
 //            collection.add(group12);
-//            FileWorker fileWorker = new FileWorker("CSV.csv");
-//            fileWorker.writer(ParserCSV.toCSV(collection));
+//            Controller.FileWorker fileWorker = new Controller.FileWorker("CSV.csv");
+//            fileWorker.writer(Controller.ParserCSV.toCSV(collection));
 //            String input = fileWorker.reader();
-//            TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
+//            TreeSetCollection<StudyGroup> collection1 = Controller.ParserCSV.csvFromData(input);
 //            System.out.println(collection);
 //            System.out.println(collection1);
 //        } catch (IncorrectScriptException e) {
@@ -70,10 +73,10 @@ public class Main {
 //        collection.add(group1);
 //        collection.add(group2);
 //        collection.add(group3);
-//        FileWorker fileWorker = new FileWorker("CSV.csv");
-//        fileWorker.writer(ParserCSV.toCSV(collection));
+//        Controller.FileWorker fileWorker = new Controller.FileWorker("CSV.csv");
+//        fileWorker.writer(Controller.ParserCSV.toCSV(collection));
 //        String input = fileWorker.reader();
-//        TreeSetCollection<StudyGroup> collection1 = ParserCSV.csvFromData(input);
+//        TreeSetCollection<StudyGroup> collection1 = Controller.ParserCSV.csvFromData(input);
 //        System.out.println(collection);
 //        System.out.println(collection1);
 

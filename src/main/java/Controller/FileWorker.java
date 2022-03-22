@@ -1,5 +1,6 @@
+package Controller;
+
 import java.io.*;
-import java.util.Arrays;
 
 public class FileWorker {
     String file;

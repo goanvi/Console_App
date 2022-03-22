@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-public class StudyGroup implements Serializable, IdManager { //Потребуется переделать конструкторы для корректной работы по ТЗ
+public class StudyGroup implements Serializable{ //Потребуется переделать конструкторы для корректной работы по ТЗ
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -18,12 +19,12 @@ public class StudyGroup implements Serializable, IdManager { //Потребуе�
     private FormOfEducation formOfEducation; //Поле может быть null
     private Semester semesterEnum; //Поле не может быть null
     private Person groupAdmin; //Поле может быть null
-    private Set<Integer> idStudyGroupBuffer = new LinkedHashSet<>();
+    private static Set<Integer> idStudyGroupBuffer = new LinkedHashSet<>();
 
     public StudyGroup(String name, Coordinates coordinates, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, String adminName,
                       String adminBirthday, float adminWeight) {
-        this.id = setID(Math.abs(UUID.randomUUID().hashCode()));
+        this.id = IdManager.setStudyGroupID(Math.abs(UUID.randomUUID().hashCode()));
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDate.now();
@@ -33,12 +34,12 @@ public class StudyGroup implements Serializable, IdManager { //Потребуе�
         this.semesterEnum = semesterEnum;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm"); //Доделать День рождения админа, придумать, как сделать запись проще
         this.groupAdmin = new Person(adminName, LocalDateTime.parse(adminBirthday, dtf), adminWeight);
-        saveID(this.id);
+        IdManager.saveStudyGroupID(this.id);
     }
 
     public StudyGroup(String name, Coordinates coordinates, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, Person person) {
-        this.id = setID(Math.abs(UUID.randomUUID().hashCode()));
+        this.id = IdManager.setStudyGroupID(Math.abs(UUID.randomUUID().hashCode()));
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDate.now();
@@ -47,7 +48,21 @@ public class StudyGroup implements Serializable, IdManager { //Потребуе�
         this.formOfEducation = formOfEducation;
         this.semesterEnum = semesterEnum;
         this.groupAdmin = person;
-        saveID(this.id);
+        IdManager.saveStudyGroupID(this.id);
+    }
+
+    public StudyGroup(int id,String name, Coordinates coordinates, long studentsCount,
+                      double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, Person person) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = LocalDate.now();
+        this.studentsCount = studentsCount;
+        this.averageMark = averageMark;
+        this.formOfEducation = formOfEducation;
+        this.semesterEnum = semesterEnum;
+        this.groupAdmin = person;
+        IdManager.saveStudyGroupID(this.id);
     }
 
     public StudyGroup(String[] string) {
@@ -71,23 +86,16 @@ public class StudyGroup implements Serializable, IdManager { //Потребуе�
         } else groupAdmin = null;
     }
 
-    @Override
-    public int setID(Integer id) {
-        int id0 = id;
-        while (true){
-            if (idStudyGroupBuffer.contains(id0)) {
-                id0=changeId(id0);
-            }
-            else {
-                break;
-            }
-        }
-        return id0;
+    public double compareTo (StudyGroup studyGroup){
+        return averageMark-studyGroup.getAverageMark();
     }
 
-    @Override
-    public void saveID(Integer id) {
-        idStudyGroupBuffer.add(id);
+    public Integer getID(){
+        return id;
+    }
+
+    public Semester getSemesterEnum(){
+        return semesterEnum;
     }
 
     public long getStudentsCount() {
@@ -127,6 +135,24 @@ public class StudyGroup implements Serializable, IdManager { //Потребуе�
                     ", groupAdmin=" + groupAdmin.toString();
         }
         return ret;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudyGroup group = (StudyGroup) o;
+        return id == group.id && studentsCount == group.studentsCount &&
+                Double.compare(group.averageMark, averageMark) == 0 && name.equals(group.name) &&
+                coordinates.equals(group.coordinates) && creationDate.equals(group.creationDate) &&
+                formOfEducation == group.formOfEducation && semesterEnum == group.semesterEnum &&
+                Objects.equals(groupAdmin, group.groupAdmin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, coordinates, creationDate,
+                studentsCount, averageMark, formOfEducation, semesterEnum, groupAdmin);
     }
 }
 
