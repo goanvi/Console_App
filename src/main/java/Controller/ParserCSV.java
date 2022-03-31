@@ -47,7 +47,7 @@ public class ParserCSV { // Подумать, как сделать обобще
 //                = T.class.getDeclaredConstructor();
 //        for (int i = 1; i< bigData.length; i++ ){
 //            String[] data = bigData[i].replace(" ","").split(",");
-//            collection.add(createObject(T.class.getDeclaredConstructor(), fromStudyGroup(data)));
+//            collection.addCommand(createObject(T.class.getDeclaredConstructor(), fromStudyGroup(data)));
 //        }
 //        return collection;
 //    }

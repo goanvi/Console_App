@@ -20,130 +20,150 @@ public class CollectionManager { //Надо будет дописать loadColl
     LocalDateTime lastSaveTime;
     LocalDateTime lastLoadTime;
 
-    public CollectionManager (FileWorker fileWorker){
+    public CollectionManager(FileWorker fileWorker) {
         this.fileWorker = fileWorker;
         this.parser = new ParserCSV();
+        lastLoadTime= LocalDateTime.now();
     }
 
-    public void clearCollection(){
+    public void clearCollection() {
         studyGroupCollection.clear();
     }
 
-    public void addToCollection(StudyGroup studyGroup){
+    public void addToCollection(StudyGroup studyGroup) {
         studyGroupCollection.add(studyGroup);
     }
 
-    public void addCollection(TreeSet<StudyGroup> collection){
-        this.studyGroupCollection= collection;
+    public void addCollection(TreeSet<StudyGroup> collection) {
+        this.studyGroupCollection = collection;
     }
 
-    public void removeGreater (StudyGroup studyGroup){
+    public void removeGreater(StudyGroup studyGroup) {
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup group: studyGroupCollection){
-                if (group.compareTo(studyGroup)>0){
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup group : studyGroupCollection) {
+                if (group.compareTo(studyGroup) > 0) {
                     IdManager.removeStudyGroupID(group.getID());
                     studyGroupCollection.remove(group);
                 }
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
     }
 
-    public void removeLower (StudyGroup studyGroup){
+    public void removeLower(StudyGroup studyGroup) {
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup group: studyGroupCollection){
-                if (group.compareTo(studyGroup)<0){
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup group : studyGroupCollection) {
+                if (group.compareTo(studyGroup) < 0) {
                     IdManager.removeStudyGroupID(group.getID());
                     studyGroupCollection.remove(group);
                 }
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
     }
 
-    public void saveCollection(){
+    public void saveCollection() {
         fileWorker.writer(parser.toCSV(studyGroupCollection));
-        lastSaveTime=LocalDateTime.now();
+        lastSaveTime = LocalDateTime.now();
     }
 
-    public StudyGroup getAnyBySemesterEnum (Semester semester){
+    public void loadCollection(String file) {
+        studyGroupCollection = parser.csvFromData(fileWorker.reader(file));
+        lastLoadTime = LocalDateTime.now();
+    }
+
+    public StudyGroup getAnyBySemesterEnum(Semester semester) {
         try {
             if (studyGroupCollection.isEmpty()) throw new EmptyCollectionException();
-            for (StudyGroup studyGroup: studyGroupCollection){
-                if (studyGroup.getSemesterEnum().equals(semester)){
+            for (StudyGroup studyGroup : studyGroupCollection) {
+                if (studyGroup.getSemesterEnum().equals(semester)) {
                     return studyGroup;
                 }
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
         return null;
     }
 
-    public StudyGroup getByValue(StudyGroup studyGroup){
+    public StudyGroup getByValue(StudyGroup studyGroup) {
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup group: studyGroupCollection){
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup group : studyGroupCollection) {
                 if (group.equals(studyGroup)) return group;
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
         return null;
     }
 
-    public StudyGroup getByID (Integer id){
+    public StudyGroup getByID(Integer id) {
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup studyGroup: studyGroupCollection){
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup studyGroup : studyGroupCollection) {
                 if (studyGroup.getID().equals(id)) return studyGroup;
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
         return null;
     }
 
-    public long getSumOfStudentsCount (){
+    public long getSumOfStudentsCount() {
         long sum = 0;
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup group: studyGroupCollection){
-                sum+=group.getStudentsCount();
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup group : studyGroupCollection) {
+                sum += group.getStudentsCount();
             }
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
         return sum;
     }
-    public List<StudyGroup> getLessThanStudentsCount(long studCount){
-        List <StudyGroup> groups = new ArrayList<>();
+
+    public List<StudyGroup> getLessThanStudentsCount(long studCount) {
+        List<StudyGroup> groups = new ArrayList<>();
         try {
-            if (studyGroupCollection.size()==0) throw new EmptyCollectionException();
-            for (StudyGroup group: studyGroupCollection){
-                if (group.getStudentsCount()<studCount){
+            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+            for (StudyGroup group : studyGroupCollection) {
+                if (group.getStudentsCount() < studCount) {
                     groups.add(group);
                 }
             }
 
-        }catch (EmptyCollectionException exception){
+        } catch (EmptyCollectionException exception) {
             ConsoleClient.printError(exception.getMessage());
         }
         return groups;
     }
 
-    public TreeSet<StudyGroup> getCollection(){return studyGroupCollection;}
+    public void remove(StudyGroup studyGroup){
+        studyGroupCollection.remove(studyGroup);
+    }
 
-    public LocalDateTime getLastSaveTime(){
+    public TreeSet<StudyGroup> getCollection() {
+        return studyGroupCollection;
+    }
+
+    public LocalDateTime getLastSaveTime() {
         return lastSaveTime;
     }
 
-    public String getCollectionType(){return studyGroupCollection.getClass().getName();}
+    public String getCollectionType() {
+        return studyGroupCollection.getClass().getName();
+    }
 
-    public int getCollectionSize(){return studyGroupCollection.size();}
+    public int getCollectionSize() {
+        return studyGroupCollection.size();
+    }
 
+    public LocalDateTime getLastLoadTime() {
+        return lastLoadTime;
+    }
 }

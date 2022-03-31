@@ -6,6 +6,10 @@ import Model.Semester;
 import Model.StudyGroup;
 import View.ConsoleClient.ConsoleClient;
 
+import java.io.Console;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Main {
@@ -15,16 +19,19 @@ public class Main {
     * при проверке работоспособности программы отловить все оставшиеся ошибки,
     * спросить про LocalDateTime и обобщить все заметки в классах здесь,
     * почистить классы от мусора,
-    * Дописать исключения для Controller.FileWorker */
+    * Дописать исключения для Controller.FileWorker
+    * перенести коллекции с id в main, в классах оставить только методы по обработке*/
 
     public static void main(String[] args) { // Доделать ДР админа
 //        try {
 
-        FileWorker fileWorker = new FileWorker("CSV.csv");
-        ParserCSV parser = new ParserCSV();
-        CollectionManager collectionManager = new CollectionManager(fileWorker);
-        TreeSet<StudyGroup> coll = parser.csvFromData(fileWorker.reader());
-        collectionManager.addCollection(coll);
+//        FileWorker fileWorker = new FileWorker("CSV.csv");
+//        ParserCSV parser = new ParserCSV();
+//        CollectionManager collectionManager = new CollectionManager(fileWorker);
+//        TreeSet<StudyGroup> coll = parser.csvFromData(fileWorker.reader());
+//        collectionManager.addCollection(coll);
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println(scanner.nextLine());
             //System.out.println(collectionManager.removeGreater());
 //        }
 //        catch (IncorrectNameEnumException exception){
@@ -49,8 +56,8 @@ public class Main {
 //                    asker.askStudentsCount(),asker.askAverageMark(),asker.askFromOfEducation(),asker.askSemester(),asker.askPerson());
 //            System.out.println(group11);
 //            System.out.println(group12);
-//            collection.add(group11);
-//            collection.add(group12);
+//            collection.addCommand(group11);
+//            collection.addCommand(group12);
 //            Controller.FileWorker fileWorker = new Controller.FileWorker("CSV.csv");
 //            fileWorker.writer(Controller.ParserCSV.toCSV(collection));
 //            String input = fileWorker.reader();
@@ -70,9 +77,9 @@ public class Main {
 //        localDateTime = LocalDateTime.parse(time.trim(),dtf);
 //        System.out.println(localDateTime);
 
-//        collection.add(group1);
-//        collection.add(group2);
-//        collection.add(group3);
+//        collection.addCommand(group1);
+//        collection.addCommand(group2);
+//        collection.addCommand(group3);
 //        Controller.FileWorker fileWorker = new Controller.FileWorker("CSV.csv");
 //        fileWorker.writer(Controller.ParserCSV.toCSV(collection));
 //        String input = fileWorker.reader();

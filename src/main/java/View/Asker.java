@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости
+public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости, проверить все exceptions
     private Scanner userScan;
     private boolean fileMode;
     private final int MAX_COORD_X = 811;
