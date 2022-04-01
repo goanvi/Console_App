@@ -141,6 +141,20 @@ public class CommandManager {
         return commandRL.execute(argument);
     }
 
+    public boolean callCommandSave(String argument){
+        return commandSave.execute(argument);
+    }
+
+    public boolean callCommandShow(String argument){
+        return commandShow.execute(argument);
+    }
+
+    public boolean callCommandSumOfStudentsCount(String argument){
+        return commandSOSC.execute(argument);
+    }
+
+    public boolean callCommandUpdateID(String argument){return commandUI.execute(argument);}
+
     public void addCommand(AbstractCommand command) {
         commandsName.put(command.getName(), command.getDescription());
     }

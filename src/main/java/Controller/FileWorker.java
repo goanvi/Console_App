@@ -17,6 +17,14 @@ public class FileWorker {
         }
     }
 
+    public void writer(String data, String file) {
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.write(data);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
     public String reader() {
         byte[] buffer;
         StringBuilder input = new StringBuilder();

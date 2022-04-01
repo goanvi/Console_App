@@ -1,14 +1,12 @@
 package Controller;
 
 import Model.Exceptions.EmptyCollectionException;
-import Model.IdManager;
 import Model.Semester;
 import Model.StudyGroup;
 import View.ConsoleClient.ConsoleClient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -66,8 +64,8 @@ public class CollectionManager { //Надо будет дописать loadColl
         }
     }
 
-    public void saveCollection() {
-        fileWorker.writer(parser.toCSV(studyGroupCollection));
+    public void saveCollection(String file) {
+        fileWorker.writer(parser.toCSV(studyGroupCollection),file);
         lastSaveTime = LocalDateTime.now();
     }
 

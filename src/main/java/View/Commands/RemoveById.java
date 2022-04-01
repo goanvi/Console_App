@@ -1,6 +1,7 @@
 package View.Commands;
 
 import Controller.CollectionManager;
+import Controller.IdManager;
 import Model.Exceptions.WrongCommandInputException;
 import View.ConsoleClient.ConsoleClient;
 
@@ -22,8 +23,9 @@ public class RemoveById extends AbstractCommand {
             if (argument.isEmpty()){
                 ConsoleClient.println("Ведите id элемента!");
                 String input = scanner.nextLine().trim();
-                int id = Integer.parseInt(input);// добавить проверку id
-                collectionManager.remove(collectionManager.getByID(id));
+                int id = Integer.parseInt(input);
+                if (!collectionManager.getCollection().removeIf(studyGroup -> studyGroup.getID()==id))
+                    throw new WrongCommandInputException(); //придумать нормальное исключеие
                 ConsoleClient.println("Элемент успешно удален!");
                 return true;
             }else throw new WrongCommandInputException();

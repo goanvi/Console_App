@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.IdManager;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -92,6 +94,10 @@ public class StudyGroup implements Serializable{ //Потребуется пер
 
     public Integer getID(){
         return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public Semester getSemesterEnum(){

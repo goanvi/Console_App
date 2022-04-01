@@ -4,25 +4,28 @@ import Controller.ParserCSV;
 import Model.Exceptions.IncorrectNameEnumException;
 import Model.Semester;
 import Model.StudyGroup;
+import View.Commands.RemoveById;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.Console;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Main {
 
     /*переписать IdManager, коллекция должна быть одна на все объекты,
-    * написать остальные вспомогательные классы для классов команд,
-    * при проверке работоспособности программы отловить все оставшиеся ошибки,
-    * спросить про LocalDateTime и обобщить все заметки в классах здесь,
-    * почистить классы от мусора,
-    * Дописать исключения для Controller.FileWorker
-    * перенести коллекции с id в main, в классах оставить только методы по обработке*/
+     * написать остальные вспомогательные классы для классов команд,
+     * при проверке работоспособности программы отловить все оставшиеся ошибки,
+     * спросить про LocalDateTime и обобщить все заметки в классах здесь,
+     * почистить классы от мусора,
+     * Дописать исключения для Controller.FileWorker
+     * перенести коллекции с id в main, в классах оставить только методы по обработке*/
 
-    public static void main(String[] args) { // Доделать ДР админа
+    public static void main(String[] args) {
+//        CollectionManager collectionManager = new CollectionManager(new FileWorker("CSV.csv"));
+//        collectionManager.loadCollection("CSV.csv");
+//        Scanner scanner = new Scanner(System.in);
+//        RemoveById removeById = new RemoveById(collectionManager, scanner);
+//        removeById.execute("");
 //        try {
 
 //        FileWorker fileWorker = new FileWorker("CSV.csv");
@@ -32,7 +35,7 @@ public class Main {
 //        collectionManager.addCollection(coll);
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println(scanner.nextLine());
-            //System.out.println(collectionManager.removeGreater());
+        //System.out.println(collectionManager.removeGreater());
 //        }
 //        catch (IncorrectNameEnumException exception){
 //            ConsoleClient.printError("gg");

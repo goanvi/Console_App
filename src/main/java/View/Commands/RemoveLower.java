@@ -1,6 +1,7 @@
 package View.Commands;
 
 import Controller.CollectionManager;
+import Controller.IdManager;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
 import View.ConsoleClient.ConsoleClient;
@@ -22,7 +23,9 @@ public class RemoveLower extends AbstractCommand{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите id элемента!");
                 String input = scanner.nextLine().trim();
-                StudyGroup group = collectionManager.getByID(Integer.parseInt(input));
+                int inputInt = Integer.parseInt(input);
+                if (!IdManager.containsStudyGroupID(inputInt)) throw new WrongCommandInputException();//Изменить исключение
+                StudyGroup group = collectionManager.getByID(inputInt);
                 collectionManager.removeLower(group);
                 ConsoleClient.println("Все элементы меньше заданного удалены!");
                 return true;

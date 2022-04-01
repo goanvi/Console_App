@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -35,6 +35,10 @@ public class IdManager {
 
     public static void removePersonID(Integer id){
         idPersonBuffer.remove(id);
+    }
+
+    public static boolean containsStudyGroupID(Integer id){
+        return idStudyGroupBuffer.contains(id);
     }
 
     public static void savePersonID(Integer id){
