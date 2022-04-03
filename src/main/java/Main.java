@@ -1,10 +1,12 @@
 import Controller.CollectionManager;
+import Controller.CommandManager;
 import Controller.FileWorker;
 import Controller.ParserCSV;
 import Model.Exceptions.IncorrectNameEnumException;
 import Model.Semester;
 import Model.StudyGroup;
-import View.Commands.RemoveById;
+import View.Asker;
+import View.Commands.*;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.Console;
@@ -21,7 +23,43 @@ public class Main {
      * перенести коллекции с id в main, в классах оставить только методы по обработке*/
 
     public static void main(String[] args) {
-//        CollectionManager collectionManager = new CollectionManager(new FileWorker("CSV.csv"));
+        CollectionManager collectionManager = new CollectionManager(new FileWorker("CSV.csv"));
+        Scanner scanner = new Scanner(System.in);
+        Asker asker = new Asker(scanner);
+        Map<String, AbstractCommand> commandMap = new LinkedHashMap<>();
+        Add add = new Add(asker,collectionManager);
+        commandMap.put(add.getName(),add);
+        Clear clear = new Clear(collectionManager);
+        commandMap.put(clear.getName(),clear);
+        Exit exit = new Exit();
+        commandMap.put(exit.getName(),exit);
+        FilterLessThanStudentsCount filterLessThanStudentsCount = new FilterLessThanStudentsCount(collectionManager,scanner);
+        Help help = new Help(commandMap);
+        commandMap.put(help.getName(),help);
+        History history = new History();
+        commandMap.put(history.getName(),history);
+        Info info = new Info(collectionManager);
+        commandMap.put(info.getName(),info);
+        RemoveAnyBySemesterEnum removeAnyBySemesterEnum = new RemoveAnyBySemesterEnum(collectionManager,scanner);
+        commandMap.put(removeAnyBySemesterEnum.getName(),removeAnyBySemesterEnum);
+        RemoveById removeById = new RemoveById(collectionManager,scanner);
+        commandMap.put(removeById.getName(),removeById);
+        RemoveGreater removeGreater = new RemoveGreater(collectionManager,scanner);
+        commandMap.put(removeGreater.getName(), removeGreater);
+        RemoveLower removeLower = new RemoveLower(collectionManager,scanner);
+        Save save = new Save(scanner, collectionManager);
+        commandMap.put(save.getName(),save);
+        Show show = new Show(collectionManager);
+        commandMap.put(show.getName(),show);
+        SumOfStudentsCount sumOfStudentsCount = new SumOfStudentsCount(collectionManager);
+        commandMap.put(sumOfStudentsCount.getName(), sumOfStudentsCount);
+        UpdateId updateId = new UpdateId(collectionManager,scanner);
+        commandMap.put(updateId.getName(),updateId);
+        CommandManager commandManager = new CommandManager(commandMap);
+        ConsoleClient consoleClient = new ConsoleClient(commandManager, scanner);
+        ExecuteScript executeScript = new ExecuteScript(consoleClient, scanner);
+        commandMap.put(executeScript.getName(),executeScript);
+        consoleClient.interactiveMode();
 //        collectionManager.loadCollection("CSV.csv");
 //        Scanner scanner = new Scanner(System.in);
 //        RemoveById removeById = new RemoveById(collectionManager, scanner);

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости, проверить все exceptions
     private Scanner userScan;
-    private boolean fileMode;
+    private static boolean fileMode;
     private final int MAX_COORD_X = 811;
     private final int MIN_STUDENTS_COUNT = 0;
     private final int MIN_AVERAGE_MARK = 0;
@@ -320,12 +320,12 @@ public class Asker { // Кажется закончил, останется то
         return person;
     }
 
-    public void setFileMode() {
+    public static void setFileMode() {
         fileMode = true;
     }
 
 
-    public void setUserMode() {
+    public static void setUserMode() {
         fileMode = false;
     }
 

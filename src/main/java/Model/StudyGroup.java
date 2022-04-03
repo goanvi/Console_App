@@ -21,7 +21,6 @@ public class StudyGroup implements Serializable{ //Потребуется пер
     private FormOfEducation formOfEducation; //Поле может быть null
     private Semester semesterEnum; //Поле не может быть null
     private Person groupAdmin; //Поле может быть null
-    private static Set<Integer> idStudyGroupBuffer = new LinkedHashSet<>();
 
     public StudyGroup(String name, Coordinates coordinates, long studentsCount,
                       double averageMark, FormOfEducation formOfEducation, Semester semesterEnum, String adminName,

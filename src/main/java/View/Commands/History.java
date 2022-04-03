@@ -3,15 +3,35 @@ package View.Commands;
 import Model.Exceptions.WrongCommandInputException;
 import View.ConsoleClient.ConsoleClient;
 
+import java.util.Map;
+
 public class History extends  AbstractCommand{
+    static private final int HISTORY_BUFFER_SIZE = 11;
+    static String[] historyBuffer = new String[HISTORY_BUFFER_SIZE];
+
     public History() {
         super("History", "Выводит последние 11 команд (без их аргументов)");
+    }
+
+    public static void addToHistory(String command) {
+        System.arraycopy(historyBuffer, 0, historyBuffer, 1, HISTORY_BUFFER_SIZE - 1);
+//            for (int i = HISTORY_BUFFER_SIZE - 1; i > 0; i--) {
+//                historyBuffer[i] = historyBuffer[i - 1];
+//            }
+        historyBuffer[0] = command;
     }
 
     @Override
     public boolean execute(String argument) {
         try{
-            if (argument.isEmpty()) return true;
+            if (argument.isEmpty()) {
+                if (historyBuffer[0]==null) throw new WrongCommandInputException();
+                for (String command: historyBuffer){
+                    if (command!=null) ConsoleClient.println(command);
+                }
+                ConsoleClient.println("История команд успешно выведена!");
+                return true;
+            }
             else throw new WrongCommandInputException();
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +

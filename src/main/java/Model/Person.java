@@ -3,8 +3,6 @@ package Model;
 import Controller.IdManager;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public class Person{ // Помнить что этот класс может бить null, переделать конструкторы при необходимости
@@ -12,7 +10,6 @@ public class Person{ // Помнить что этот класс может б�
     private java.time.LocalDateTime birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0
     private String passportID; //Длина строки не должна быть больше 33, Значение этого поля должно быть уникальным, Поле может быть null
-    private Set<Integer> idPersonBuffer = new LinkedHashSet<>();
 
 
     public Person(String name, LocalDateTime birthday, float weight, String passportID) {

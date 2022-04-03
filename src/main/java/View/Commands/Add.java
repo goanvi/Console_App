@@ -21,9 +21,14 @@ public class Add extends AbstractCommand{
     public boolean execute(String argument) {
         try{
             if (argument.isEmpty()){
-                collectionManager.addToCollection(new StudyGroup(asker.askName(),asker.askCoordinates(),
-                        asker.askStudentsCount(), asker.askAverageMark(),asker.askFromOfEducation(),
-                        asker.askSemester(),asker.askPerson()));
+                collectionManager.addToCollection(new StudyGroup(
+                        asker.askName(),
+                        asker.askCoordinates(),
+                        asker.askStudentsCount(),
+                        asker.askAverageMark(),
+                        asker.askFromOfEducation(),
+                        asker.askSemester(),
+                        asker.askPerson()));
                 ConsoleClient.println("Группа успешно создана!");
                 return true;
             }
