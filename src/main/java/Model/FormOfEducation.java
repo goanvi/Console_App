@@ -11,11 +11,12 @@ public enum FormOfEducation {
     EVENING_CLASSES("Evening");
 
     private final String name;
+
     FormOfEducation (String name){
         this.name = name;
     }
 
-    public static FormOfEducation equals(String name) throws IncorrectNameEnumException {
+    public static FormOfEducation convert(String name) throws IncorrectNameEnumException {
         return switch (name.toLowerCase()) {
             case "distance" -> FormOfEducation.DISTANCE_EDUCATION;
             case "full time" -> FormOfEducation.FULL_TIME_EDUCATION;

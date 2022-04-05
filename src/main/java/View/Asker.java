@@ -1,5 +1,6 @@
 package View;
 
+import Controller.IdManager;
 import Model.*;
 import Model.Exceptions.*;
 import View.ConsoleClient.ConsoleClient;
@@ -7,7 +8,6 @@ import View.ConsoleClient.ConsoleClient;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.UUID;
@@ -33,9 +33,9 @@ public class Asker { // Кажется закончил, останется то
         while (true) {
             try {
                 ConsoleClient.println("Введите название группы");
-                name = userScan.nextLine().trim();
+                name = readLine();
                 if (fileMode) ConsoleClient.println(name);
-                if (name.equals("")||name.equalsIgnoreCase("null"))throw new CannotBeNullException();
+                if (name.equals(""))throw new CannotBeNullException();
                 break;
             } catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
@@ -59,7 +59,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите координату X.");
                 ConsoleClient.println("Максимальное значение координаты X = " + MAX_COORD_X);
-                strX = userScan.nextLine().trim();
+                strX=readLine();
                 if (fileMode) ConsoleClient.println(strX);
                 if (strX.equals("")) throw new CannotBeNullException();
                 x = Integer.parseInt(strX);
@@ -74,7 +74,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
                 if (fileMode) throw new IncorrectScriptException();
-            } catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -88,7 +91,7 @@ public class Asker { // Кажется закончил, останется то
         while (true) {
             try {
                 ConsoleClient.println("Введите координату Y");
-                strY = userScan.nextLine().trim();
+                strY = readLine();
                 if (fileMode) ConsoleClient.println(strY);
                 y = Integer.parseInt(strY);
                 break;
@@ -96,7 +99,10 @@ public class Asker { // Кажется закончил, останется то
             catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
                 if (fileMode) throw new IncorrectScriptException();
-            } catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -111,15 +117,15 @@ public class Asker { // Кажется закончил, останется то
     }
 
     public long askStudentsCount() throws IncorrectScriptException{
-        String srtStud;
+        String strStud;
         long stud;
         while (true){
             try {
                 ConsoleClient.println("Введите количество студентов в группе.");
                 ConsoleClient.println("Значение должно быть больше " + MIN_STUDENTS_COUNT);
-                srtStud = userScan.nextLine().trim();
-                if (fileMode) ConsoleClient.println(srtStud);
-                stud = Long.parseLong(srtStud);
+                strStud = readLine();
+                if (fileMode) ConsoleClient.println(strStud);
+                stud = Long.parseLong(strStud);
                 if (stud<=0) throw new GoingBeyondLimitsException();
                 break;
             }catch (GoingBeyondLimitsException exception){
@@ -128,7 +134,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
                 if (fileMode) throw new IncorrectScriptException();
-            } catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -143,7 +152,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите среднюю оценку в группе.");
                 ConsoleClient.println("Значение должно быть больше " + MIN_AVERAGE_MARK);
-                strMark = userScan.nextLine().trim();
+                strMark =readLine();
                 if (fileMode) ConsoleClient.println(strMark);
                 mark = Double.parseDouble(strMark);
                 if (mark<=0) throw new GoingBeyondLimitsException();
@@ -154,7 +163,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (NumberFormatException exception){
                 ConsoleClient.printError("Значением поля должно являться число!");
                 if (fileMode) throw new IncorrectScriptException();
-            } catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -169,10 +181,10 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите форму обучения");
                 ConsoleClient.println("Доступные формы обучения: Distance, Full time, Evening");
-                strEduc = userScan.nextLine().trim();
+                strEduc=readLine();
                 if(strEduc.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strEduc);
-                educ = FormOfEducation.equals(strEduc);
+                educ = FormOfEducation.convert(strEduc);
                 break;
             }catch (IncorrectNameEnumException exception){
                 ConsoleClient.printError("Введено неправильное имя формы обучения!");
@@ -180,7 +192,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
                 if (fileMode) throw new IncorrectScriptException();
-            }catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -195,7 +210,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите семестр обучения");
                 ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
-                strSem = userScan.nextLine().trim();
+                strSem = readLine();
                 if(strSem.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strSem);
                 sem= Semester.equals(strSem);
@@ -206,7 +221,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (CannotBeNullException exception) {
                 ConsoleClient.printError(exception.getMessage());
                 if (fileMode) throw new IncorrectScriptException();
-            }catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -219,17 +237,17 @@ public class Asker { // Кажется закончил, останется то
         while (true){
             try {
                 ConsoleClient.println("Введите имя админа");
-                admin = userScan.nextLine().trim();
+                admin = readLine();
                 if (admin.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(admin);
                 break;
-            }catch (NoSuchElementException exception){
-                ConsoleClient.printError("Значение поля не распознано!");
-                if (fileMode) throw new IncorrectScriptException();
             }catch (CannotBeNullException exception){
                 ConsoleClient.printError(exception.getMessage());
                 if (fileMode) throw new IncorrectScriptException();
-            }catch (IllegalStateException exception){
+            }catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -245,7 +263,7 @@ public class Asker { // Кажется закончил, останется то
                 ConsoleClient.println("Введите день рождения админа.");
                 ConsoleClient.println("Шаблон ввода: день недели, месяц день, год час:минута");
                 ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
-                strTime = userScan.nextLine().trim();
+                strTime = readLine();
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm");
                 if (strTime.equals("")) time = null;
                 else time = LocalDateTime.parse(strTime,dtf);
@@ -254,9 +272,13 @@ public class Asker { // Кажется закончил, останется то
             }
             catch (DateTimeParseException exception){ //Обработать исключения
                 ConsoleClient.printError("Некорректный ввод даты рождения!");
-                ConsoleClient.println("Обратите внимание на ввод дня недели и месяца с заглавной буквы и сокращение названия месяца 3 буквами!");
+                ConsoleClient.println("Обратите внимание на ввод дня недели и месяца с заглавной буквы и " +
+                        "сокращение названия месяца 3 буквами!");
                 if (fileMode) throw new IncorrectScriptException();
-            }catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -271,7 +293,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите вес админа");
                 ConsoleClient.println("Значение поля должно быть больше " + MIN_WEIGHT_ADMIN);
-                strWeight = userScan.nextLine().trim();
+                strWeight = readLine();
                 if (fileMode) ConsoleClient.println(strWeight);
                 weight = Float.parseFloat(strWeight);
                 if (weight<=0f) throw new GoingBeyondLimitsException();
@@ -282,7 +304,10 @@ public class Asker { // Кажется закончил, останется то
             }catch (GoingBeyondLimitsException exception){
                 ConsoleClient.printError(exception.getMessage());
                 if (fileMode) throw new IncorrectScriptException();
-            }catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
@@ -295,13 +320,13 @@ public class Asker { // Кажется закончил, останется то
         while (true) {
             try {
                 ConsoleClient.println("Вы хотите указать админа группы? Y/N");
-                String answer = userScan.nextLine().trim();
-                if (answer.equalsIgnoreCase("Y")) { // поставить LowerCase
+                String answer = readLine();
+                if (answer.equalsIgnoreCase("Y")) { //
                     setPersonExists();
                     String adminName = askAdminName();
                     LocalDateTime adminBirthday = askAdminBirthday();
                     float adminWeight = askAdminWeight();
-                    String adminID = Integer.toString(Math.abs(UUID.randomUUID().hashCode()));
+                    String adminID = IdManager.setPersonID(Math.abs(UUID.randomUUID().hashCode()));
                     person = new Person(adminName, adminBirthday, adminWeight, adminID);
                 }
                 else if (answer.equalsIgnoreCase("N")) {
@@ -312,12 +337,53 @@ public class Asker { // Кажется закончил, останется то
             }catch (IncorrectInputException exception) {
                 ConsoleClient.printError("Некорректный ввод ответа!");
                 ConsoleClient.println("Введите Y, если согласный и N, если не согласны!");
-            }catch (IllegalStateException exception){
+            } catch (NoSuchElementException exception){
+                ConsoleClient.printError("Значение поля не распознано!");
+                if (fileMode) throw new IncorrectScriptException();
+            } catch (IllegalStateException exception) {
                 ConsoleClient.printError("Непредвиденная ошибка!");
                 System.exit(0);
             }
         }
         return person;
+    }
+
+    public boolean changeParameters(String[] parameters, StudyGroup studyGroup) throws IncorrectScriptException{
+        try {
+            for (String parameter : parameters) {
+                switch (parameter.toLowerCase()) {
+                    case "name":
+                        studyGroup.setName(askName());
+                    case "coordinates":
+                        studyGroup.setCoordinates(askCoordinates());
+                    case "students count":
+                        studyGroup.setStudentsCount(askStudentsCount());
+                    case "average mark":
+                        studyGroup.setAverageMark(askAverageMark());
+                    case "from of education":
+                        studyGroup.setFormOfEducation(askFromOfEducation());
+                    case "semester":
+                        studyGroup.setSemesterEnum(askSemester());
+                    case "group admin":
+                        studyGroup.setGroupAdmin(askPerson());
+                    default:
+                        throw new IncorrectInputException();
+                }
+            }
+            return true;
+        }catch (IncorrectInputException exception){
+            ConsoleClient.printError("Параметры группы введены неверно!");
+            if (fileMode) throw new IncorrectScriptException();
+        }
+        return false;
+    }
+
+    private String readLine(){
+        if (fileMode){
+            Scanner scriptScanner = ConsoleClient.getScriptScanner();
+            return scriptScanner.nextLine().trim();
+        }
+        return userScan.nextLine().trim();
     }
 
     public static void setFileMode() {
@@ -340,5 +406,9 @@ public class Asker { // Кажется закончил, останется то
 
     public void setPersonDoesntExist(){
         personExist = false;
+    }
+
+    public static boolean getFileMode(){
+        return fileMode;
     }
 }

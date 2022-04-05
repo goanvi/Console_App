@@ -95,10 +95,6 @@ public class StudyGroup implements Serializable{ //Потребуется пер
         return id;
     }
 
-    public void setId(Integer id){
-        this.id = id;
-    }
-
     public Semester getSemesterEnum(){
         return semesterEnum;
     }
@@ -111,12 +107,46 @@ public class StudyGroup implements Serializable{ //Потребуется пер
         return averageMark;
     }
 
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setStudentsCount(long studentsCount) {
+        this.studentsCount = studentsCount;
+    }
+
+    public void setAverageMark(double averageMark) {
+        this.averageMark = averageMark;
+    }
+
+    public void setFormOfEducation(FormOfEducation formOfEducation) {
+        this.formOfEducation = formOfEducation;
+    }
+
+    public void setSemesterEnum(Semester semesterEnum) {
+        this.semesterEnum = semesterEnum;
+    }
+
+    public void setGroupAdmin(Person groupAdmin) {
+        this.groupAdmin = groupAdmin;
+    }
+
     @Override
     public String toString() {
-        String ret = "";
         if (groupAdmin == null) {
-            ret = "class=" + getClass() +
-                    ", id=" + id +
+            return  "id=" + id +
                     ", name=" + name +
                     ", coordinatesX=" + coordinates.getX() +
                     ", coordinatesY=" + coordinates.getY() +
@@ -127,8 +157,7 @@ public class StudyGroup implements Serializable{ //Потребуется пер
                     ", semesterEnum=" + semesterEnum +
                     ", groupAdmin=null";
         } else {
-            ret = "class=" + getClass() +
-                    ", id=" + id +
+            return  "id=" + id +
                     ", name=" + name +
                     ", coordinatesX=" + coordinates.getX() +
                     ", coordinatesY=" + coordinates.getY() +
@@ -139,7 +168,6 @@ public class StudyGroup implements Serializable{ //Потребуется пер
                     ", semesterEnum=" + semesterEnum +
                     ", groupAdmin=" + groupAdmin.toString();
         }
-        return ret;
     }
 
     @Override

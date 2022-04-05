@@ -2,7 +2,9 @@
 package View.Commands;
 
 import Controller.CommandManager;
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
+import View.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.Map;
@@ -17,7 +19,7 @@ public class Help extends AbstractCommand{
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument) throws IncorrectScriptException {
         try {
             if (argument.isEmpty()){
                 commands.forEach((key,value) -> ConsoleClient.println(key + "  -  " + value.getDescription()));
@@ -28,6 +30,7 @@ public class Help extends AbstractCommand{
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }
         return false;
     }

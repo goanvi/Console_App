@@ -88,7 +88,7 @@ public class ParserCSV { // Подумать, как сделать обобще
 //    }
 
     private static String[] makeStudyGroupHeader(){
-        return new String[]{"class",  "id",  "name",  "coordinatesX",  "coordinatesY",  "creationDate",
+        return new String[]{"id",  "name",  "coordinatesX",  "coordinatesY",  "creationDate",
                 "studentsCount",  "averageMark",  "formOfEducation",  "semesterEnum",  "groupAdmin",  "birthday",  "weight",  "passportID"};
     }
 
@@ -104,7 +104,7 @@ public class ParserCSV { // Подумать, как сделать обобще
 
     private static String[] makeData(Object object) {
         String[] recordDt = object.toString().split(",");
-        String[] data = new String[14];
+        String[] data = new String[13];
         for (int i = 0; i < recordDt.length; i++) {
             String[] sword = recordDt[i].split("=");
             data[i] = sword[sword.length -1];

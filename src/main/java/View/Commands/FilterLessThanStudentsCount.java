@@ -1,11 +1,15 @@
 package View.Commands;
 
 import Controller.CollectionManager;
+import Model.Exceptions.EmptyCollectionException;
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
+import View.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class FilterLessThanStudentsCount extends AbstractCommand {
@@ -13,29 +17,48 @@ public class FilterLessThanStudentsCount extends AbstractCommand {
     Scanner scanner;
 
     public FilterLessThanStudentsCount(CollectionManager manager, Scanner scanner) {
-        super("Filter_less_than_students_count", "Выводит элементы, значение поля studentsCount которых меньше заданного");
+        super("Filter_less_than_students_count", "Выводит элементы, значение поля studentsCount" +
+                " которых меньше заданного");
         this.collectionManager = manager;
         this.scanner = scanner;
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument) throws IncorrectScriptException {
+        long studCount;
         try {
             if (argument.isEmpty()) {
                 ConsoleClient.println("Введите количество учеников");
-                long studCount = Long.parseLong(scanner.nextLine().trim());
+                if (Asker.getFileMode()){
+                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+                    studCount = Long.parseLong(scriptScanner.nextLine().trim());
+                }else studCount = Long.parseLong(scanner.nextLine().trim());
                 List<StudyGroup> output = collectionManager.getLessThanStudentsCount(studCount);
-                for (StudyGroup group : output) {
+                if (output.isEmpty()) ConsoleClient.println("Во всех группах количество человек больше");
+                else {
+                    for (StudyGroup group : output) {
                     ConsoleClient.println(group);
+                    }
+                    ConsoleClient.println("Элементы коллекции успешно выведены!");
                 }
-                ConsoleClient.println("Элементы коллекции успешно выведены!");
                 return true;
             } else throw new WrongCommandInputException();
-        } catch (WrongCommandInputException exception) {
+        }catch (EmptyCollectionException exception){
+            ConsoleClient.printError("Коллекция пуста!");
+            return true;//Не уверен, что так должно быть. Пока что считаю, что пустая коллекция не повод выбрасывать ошибку выполнения
+        }catch (WrongCommandInputException exception) {
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }catch (NumberFormatException exception){
             ConsoleClient.printError("Значением поля должно являться число!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        }catch (NoSuchElementException exception){
+            ConsoleClient.printError("Значение поля не распознано!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        } catch (IllegalStateException exception) {
+            ConsoleClient.printError("Непредвиденная ошибка!");
+            System.exit(0);
         }
         return false;
     }

@@ -1,6 +1,8 @@
 package View.Commands;
 
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
+import View.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 public class Exit extends AbstractCommand{
@@ -9,7 +11,7 @@ public class Exit extends AbstractCommand{
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument) throws IncorrectScriptException {
         try {
             if (argument.isEmpty()){
                 System.exit(0);
@@ -21,6 +23,7 @@ public class Exit extends AbstractCommand{
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }
         return false;
     }

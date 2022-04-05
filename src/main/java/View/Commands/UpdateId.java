@@ -2,64 +2,91 @@ package View.Commands;
 
 import Controller.CollectionManager;
 import Controller.IdManager;
+import Model.Exceptions.EmptyCollectionException;
+import Model.Exceptions.IncorrectInputException;
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
+import View.Asker;
 import View.ConsoleClient.ConsoleClient;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class UpdateId extends AbstractCommand{
     CollectionManager collectionManager;
     Scanner scanner;
+    Asker asker;
 
-    public UpdateId(CollectionManager collectionManager, Scanner scanner) {
+    public UpdateId(CollectionManager collectionManager, Scanner scanner, Asker asker) {
         super("Update_id", "Обновляет значение элемента коллекции, id которого равен заданному");
         this.collectionManager = collectionManager;
         this.scanner = scanner;
+        this.asker = asker;
     }
 
-    private int writeId(){
-        int inputInt;
-        while (true){
-            try {
-                ConsoleClient.println("Введите id!");
-                String input = scanner.nextLine().trim();
-                inputInt = Integer.parseInt(input);
-                if (!IdManager.containsStudyGroupID(inputInt)) throw new WrongCommandInputException();
-                break;
-            }catch (WrongCommandInputException exception){
-                ConsoleClient.printError("Такой id уже существует!");
-            }
+    private boolean setNewParameters(StudyGroup studyGroup)throws IncorrectScriptException{
+        try {
+            ConsoleClient.println("Какие параметры группы вы хотите изменить?\n" +
+                    "Name\n" +
+                    "Coordinates\n" +
+                    "Students count\n" +
+                    "Average mark\n" +
+                    "From of education\n" +
+                    "Semester\n" +
+                    "Group admin");
+            ConsoleClient.println("Запишите все изменяемые параметры в строчку через запятую");
+            String[] parameters = scanner.nextLine().trim().split(",");
+            return asker.changeParameters(parameters, studyGroup);
+        } catch (NoSuchElementException exception){
+            ConsoleClient.printError("Значение поля не распознано!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        } catch (IllegalStateException exception) {
+            ConsoleClient.printError("Непредвиденная ошибка!");
+            System.exit(0);
         }
-        return inputInt;
+        return false;
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument)throws IncorrectScriptException{
+        String input;
         try{
             if (argument.isEmpty()){
-                ConsoleClient.println("Введите id элемента, в котором хотите изменить id!");
-                String input = scanner.nextLine().trim();
+                ConsoleClient.println("Введите id элемента, которого вы хотите изменить:");
+                if (Asker.getFileMode()){
+                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+                    input = scriptScanner.nextLine().trim();
+                }else input = scanner.nextLine().trim();
                 Integer inputInt = Integer.parseInt(input);
                 if (!IdManager.containsStudyGroupID(inputInt))
-                    throw new WrongCommandInputException(); // изменить исключения
+                    throw new IncorrectInputException();
                 StudyGroup group = collectionManager.getByID(inputInt);
-                IdManager.removeStudyGroupID(inputInt);
-//                ConsoleClient.println("Хотите ввести собственное значение id? Y/N");
-//                if (scanner.nextLine().trim().equals("Y")){
-//                    group.setId(writeId());
-//                }
-//                else if
-                int newId = UUID.randomUUID().hashCode();
-                group.setId(IdManager.setStudyGroupID(newId));
-                IdManager.saveStudyGroupID(newId);
-                ConsoleClient.println("Id успешно изменен!");
-                return true;
+                while (true){
+                    if (setNewParameters(group)) {
+                        ConsoleClient.println("Параметры элемента успешно изменены!");
+                        return true;
+                    }
+                }
             }else throw new WrongCommandInputException();
+        }catch (EmptyCollectionException exception){
+            ConsoleClient.printError("Коллекция пуста!");
+            return true;//Не уверен, что так должно быть. Пока что считаю, что пустая коллекция не повод выбрасывать ошибку выполнения
+        }catch (IncorrectInputException exception){
+            ConsoleClient.printError("Такого id не существует!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        } catch (NoSuchElementException exception){
+            ConsoleClient.printError("Значение поля не распознано!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        } catch (IllegalStateException exception) {
+            ConsoleClient.printError("Непредвиденная ошибка!");
+            System.exit(0);
         }
         return false;
     }

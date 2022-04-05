@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class IdManager {
     private static Set<Integer> idStudyGroupBuffer = new LinkedHashSet<>();
-    private static Set<Integer> idPersonBuffer = new LinkedHashSet<>();
+    private static Set<String> idPersonBuffer = new LinkedHashSet<>();
 
     public static int setStudyGroupID (Integer id){
         int id0 = id;
@@ -20,7 +20,7 @@ public class IdManager {
         return id0;
     }
 
-    public static int setPersonID(Integer id){
+    public static String setPersonID(Integer id){
         int passportID0 = id;
         while (true){
             if (idPersonBuffer.contains(passportID0)) {
@@ -30,7 +30,7 @@ public class IdManager {
                 break;
             }
         }
-        return passportID0;
+        return Integer.toString(passportID0);
     }
 
     public static void removePersonID(Integer id){
@@ -41,14 +41,18 @@ public class IdManager {
         return idStudyGroupBuffer.contains(id);
     }
 
-    public static void savePersonID(Integer id){
-        idPersonBuffer.add(id);
+    public static boolean containsPersonID(String id){
+        return idPersonBuffer.contains(id);
     }
 
+    public static void savePersonID(String id){
+        idPersonBuffer.add(id);
+    }
 
     public static void saveStudyGroupID(Integer id){
         idStudyGroupBuffer.add(id);
     }
+
     public static void removeStudyGroupID(Integer id){
         idStudyGroupBuffer.remove(id);
     }

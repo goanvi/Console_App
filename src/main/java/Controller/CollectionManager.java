@@ -5,6 +5,7 @@ import Model.Semester;
 import Model.StudyGroup;
 import View.ConsoleClient.ConsoleClient;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,14 @@ public class CollectionManager { //Надо будет дописать loadColl
     LocalDateTime lastSaveTime;
     LocalDateTime lastLoadTime;
 
-    public CollectionManager(FileWorker fileWorker) {
-        this.fileWorker = fileWorker;
+    public CollectionManager(String readFile) {
+        this.fileWorker = new FileWorker(readFile);
         this.parser = new ParserCSV();
-        lastLoadTime= LocalDateTime.now();
+        loadCollection(readFile);
     }
 
     public void clearCollection() {
+        if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция и так пустая");
         studyGroupCollection.clear();
     }
 
@@ -36,35 +38,28 @@ public class CollectionManager { //Надо будет дописать loadColl
         this.studyGroupCollection = collection;
     }
 
-    public void removeGreater(StudyGroup studyGroup) {
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup group : studyGroupCollection) {
-                if (group.compareTo(studyGroup) > 0) {
-                    IdManager.removeStudyGroupID(group.getID());
-                    studyGroupCollection.remove(group);
-                }
+    public void removeGreater(StudyGroup studyGroup) throws EmptyCollectionException {
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup group : studyGroupCollection) {
+            if (group.compareTo(studyGroup) > 0) {
+                IdManager.removeStudyGroupID(group.getID());
+                studyGroupCollection.remove(group);
             }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
         }
     }
 
-    public void removeLower(StudyGroup studyGroup) {
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup group : studyGroupCollection) {
-                if (group.compareTo(studyGroup) < 0) {
-                    IdManager.removeStudyGroupID(group.getID());
-                    studyGroupCollection.remove(group);
-                }
+    public void removeLower(StudyGroup studyGroup) throws EmptyCollectionException{
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup group : studyGroupCollection) {
+            if (group.compareTo(studyGroup) < 0) {
+                IdManager.removeStudyGroupID(group.getID());
+                studyGroupCollection.remove(group);
             }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
         }
     }
 
-    public void saveCollection(String file) {
+    public void saveCollection(String file) throws IOException {
+        if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция пуста");
         fileWorker.writer(parser.toCSV(studyGroupCollection),file);
         lastSaveTime = LocalDateTime.now();
     }
@@ -74,71 +69,50 @@ public class CollectionManager { //Надо будет дописать loadColl
         lastLoadTime = LocalDateTime.now();
     }
 
-    public StudyGroup getAnyBySemesterEnum(Semester semester) {
-        try {
-            if (studyGroupCollection.isEmpty()) throw new EmptyCollectionException();
-            for (StudyGroup studyGroup : studyGroupCollection) {
-                if (studyGroup.getSemesterEnum().equals(semester)) {
-                    return studyGroup;
-                }
+    public StudyGroup getAnyBySemesterEnum(Semester semester) throws EmptyCollectionException{
+        if (studyGroupCollection.isEmpty()) throw new EmptyCollectionException();
+        for (StudyGroup studyGroup : studyGroupCollection) {
+            if (studyGroup.getSemesterEnum().equals(semester)) {
+                return studyGroup;
             }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
+        }
+        return null; // вывести ошибку если приходит null
+    }
+
+    public StudyGroup getByValue(StudyGroup studyGroup) throws EmptyCollectionException{
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup group : studyGroupCollection) {
+            if (group.equals(studyGroup)) return group;
         }
         return null;
     }
 
-    public StudyGroup getByValue(StudyGroup studyGroup) {
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup group : studyGroupCollection) {
-                if (group.equals(studyGroup)) return group;
-            }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
+    public StudyGroup getByID(Integer id) throws EmptyCollectionException{
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup studyGroup : studyGroupCollection) {
+            if (studyGroup.getID().equals(id)) return studyGroup;
         }
         return null;
     }
 
-    public StudyGroup getByID(Integer id) {
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup studyGroup : studyGroupCollection) {
-                if (studyGroup.getID().equals(id)) return studyGroup;
-            }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
-        }
-        return null;
-    }
-
-    public long getSumOfStudentsCount() {
+    public long getSumOfStudentsCount() throws EmptyCollectionException{
         long sum = 0;
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup group : studyGroupCollection) {
-                sum += group.getStudentsCount();
-            }
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup group : studyGroupCollection) {
+            sum += group.getStudentsCount();
         }
         return sum;
     }
 
-    public List<StudyGroup> getLessThanStudentsCount(long studCount) {
+    public List<StudyGroup> getLessThanStudentsCount(long studCount) throws EmptyCollectionException{
         List<StudyGroup> groups = new ArrayList<>();
-        try {
-            if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-            for (StudyGroup group : studyGroupCollection) {
-                if (group.getStudentsCount() < studCount) {
-                    groups.add(group);
-                }
+        if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
+        for (StudyGroup group : studyGroupCollection) {
+            if (group.getStudentsCount() < studCount) {
+                groups.add(group);
             }
-
-        } catch (EmptyCollectionException exception) {
-            ConsoleClient.printError(exception.getMessage());
         }
-        return groups;
+        return groups; // обработать если приходит пустая колллекция
     }
 
     public void remove(StudyGroup studyGroup){

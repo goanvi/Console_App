@@ -10,20 +10,21 @@ import View.Commands.*;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
 
-    /*переписать IdManager, коллекция должна быть одна на все объекты,
-     * написать остальные вспомогательные классы для классов команд,
-     * при проверке работоспособности программы отловить все оставшиеся ошибки,
+    /* при проверке работоспособности программы отловить все оставшиеся ошибки,
      * спросить про LocalDateTime и обобщить все заметки в классах здесь,
      * почистить классы от мусора,
      * Дописать исключения для Controller.FileWorker
-     * перенести коллекции с id в main, в классах оставить только методы по обработке*/
+     * проверить IgnoreCase в AskPerson*/
 
     public static void main(String[] args) {
-        CollectionManager collectionManager = new CollectionManager(new FileWorker("CSV.csv"));
+        CollectionManager collectionManager = new CollectionManager(System.getenv("LABA5"));
         Scanner scanner = new Scanner(System.in);
         Asker asker = new Asker(scanner);
         Map<String, AbstractCommand> commandMap = new LinkedHashMap<>();
@@ -34,6 +35,7 @@ public class Main {
         Exit exit = new Exit();
         commandMap.put(exit.getName(),exit);
         FilterLessThanStudentsCount filterLessThanStudentsCount = new FilterLessThanStudentsCount(collectionManager,scanner);
+        commandMap.put(filterLessThanStudentsCount.getName(),filterLessThanStudentsCount);
         Help help = new Help(commandMap);
         commandMap.put(help.getName(),help);
         History history = new History();
@@ -47,13 +49,14 @@ public class Main {
         RemoveGreater removeGreater = new RemoveGreater(collectionManager,scanner);
         commandMap.put(removeGreater.getName(), removeGreater);
         RemoveLower removeLower = new RemoveLower(collectionManager,scanner);
+        commandMap.put(removeLower.getName(),removeLower);
         Save save = new Save(scanner, collectionManager);
         commandMap.put(save.getName(),save);
         Show show = new Show(collectionManager);
         commandMap.put(show.getName(),show);
         SumOfStudentsCount sumOfStudentsCount = new SumOfStudentsCount(collectionManager);
         commandMap.put(sumOfStudentsCount.getName(), sumOfStudentsCount);
-        UpdateId updateId = new UpdateId(collectionManager,scanner);
+        UpdateId updateId = new UpdateId(collectionManager,scanner, asker);
         commandMap.put(updateId.getName(),updateId);
         CommandManager commandManager = new CommandManager(commandMap);
         ConsoleClient consoleClient = new ConsoleClient(commandManager, scanner);
@@ -65,7 +68,6 @@ public class Main {
 //        RemoveById removeById = new RemoveById(collectionManager, scanner);
 //        removeById.execute("");
 //        try {
-
 //        FileWorker fileWorker = new FileWorker("CSV.csv");
 //        ParserCSV parser = new ParserCSV();
 //        CollectionManager collectionManager = new CollectionManager(fileWorker);

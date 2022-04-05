@@ -22,8 +22,8 @@ public class Person{ // Помнить что этот класс может б�
         this.name = name;
         this.birthday = birthday;
         this.weight = weight;
-        this.passportID = Integer.toString(IdManager.setPersonID(Math.abs(UUID.randomUUID().hashCode())));
-        IdManager.savePersonID(Integer.parseInt(passportID));
+        this.passportID = IdManager.setPersonID(Math.abs(UUID.randomUUID().hashCode()));
+        IdManager.savePersonID(passportID);
     }
 
     @Override

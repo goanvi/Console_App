@@ -18,7 +18,7 @@ public class Add extends AbstractCommand{
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument) throws IncorrectScriptException{
         try{
             if (argument.isEmpty()){
                 collectionManager.addToCollection(new StudyGroup(
@@ -33,11 +33,10 @@ public class Add extends AbstractCommand{
                 return true;
             }
             else throw new WrongCommandInputException();
-        }catch (IncorrectScriptException exception){
-            ConsoleClient.printError(exception.getMessage());
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }
         return false;
     }

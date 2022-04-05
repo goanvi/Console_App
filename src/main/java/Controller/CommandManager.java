@@ -1,6 +1,10 @@
 package Controller;
 
+import Model.Exceptions.ExecuteCommandException;
+import Model.Exceptions.IncorrectNameEnumException;
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
+import View.Asker;
 import View.Commands.*;
 import View.ConsoleClient.ConsoleClient;
 
@@ -11,31 +15,35 @@ public class CommandManager {
     String[] historyBuffer = new String[HISTORY_BUFFER_SIZE];
     Map<String, AbstractCommand> commands;
 
-    public CommandManager(Map<String,AbstractCommand> commands) {
+    public CommandManager(Map<String, AbstractCommand> commands) {
         this.commands = commands;
     }
 
-    public boolean callCommand(String command, String argument){
-        boolean answer = false;
+    public void callCommand(String command, String argument) throws IncorrectScriptException {
+        boolean answer;
         try {
             int count = 0;
-            for (Map.Entry<String,AbstractCommand> commandMap : commands.entrySet()){
-                if (commandMap.getKey().equalsIgnoreCase(command)){
-                    count+=1;
-                    answer=commandMap.getValue().execute(argument);
+            for (Map.Entry<String, AbstractCommand> commandMap : commands.entrySet()) {
+                if (commandMap.getKey().equalsIgnoreCase(command)) {
+                    count += 1;
+                    answer = commandMap.getValue().execute(argument);
                     if (answer) History.addToHistory(command);
+                    else throw new ExecuteCommandException();
                 }
             }
-            if (count==0) throw new WrongCommandInputException();
+            if (count == 0) throw new WrongCommandInputException();
 //            if (commands.containsKey(command)){
 //                answer = commands.get(command).execute(argument);
 //                if (answer) History.addToHistory(command);
 //            } else throw new WrongCommandInputException();
 
-        }catch (WrongCommandInputException exception){
+        } catch (WrongCommandInputException exception) {
             ConsoleClient.printError("Некорректный ввод команды!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
+        } catch (ExecuteCommandException exception) {
+            ConsoleClient.printError(command + ": ошибка в выполнении команды!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }
-        return answer;
     }
 
 //    public boolean callCommandAdd(String argument) {
@@ -125,11 +133,11 @@ public class CommandManager {
         }
     }
 
-    public Map<String, AbstractCommand> getCommands(){
+    public Map<String, AbstractCommand> getCommands() {
         return commands;
     }
 
-    public String[] getHistoryBuffer(){
+    public String[] getHistoryBuffer() {
         return historyBuffer;
     }
 }

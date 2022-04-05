@@ -1,6 +1,8 @@
 package View.Commands;
 
+import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
+import View.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.Map;
@@ -22,12 +24,15 @@ public class History extends  AbstractCommand{
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument) throws IncorrectScriptException {
         try{
             if (argument.isEmpty()) {
-                if (historyBuffer[0]==null) throw new WrongCommandInputException();
+                if (historyBuffer[0]==null) {
+                    ConsoleClient.println("Еще не было инициализировано ни одной команды!");
+                    return true;
+                }
                 for (String command: historyBuffer){
-                    if (command!=null) ConsoleClient.println(command);
+                    if (command != null) ConsoleClient.println(command);
                 }
                 ConsoleClient.println("История команд успешно выведена!");
                 return true;
@@ -36,6 +41,7 @@ public class History extends  AbstractCommand{
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }
         return false;
     }

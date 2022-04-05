@@ -17,12 +17,18 @@ public class FileWorker {
         }
     }
 
-    public void writer(String data, String file) {
+    public void writer(String data, String file) throws IOException{
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.write(data);
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (FileNotFoundException exception) {
+            createFile(file);
         }
+    }
+
+    private void createFile(String file)throws IOException{
+        File newFile = new File(file);
+        newFile.createNewFile();
+
     }
 
     public String reader() {
