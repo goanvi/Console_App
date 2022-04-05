@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости, проверить все exceptions
-    private Scanner userScan;
+    ConsoleClient consoleClient;
     private static boolean fileMode;
     private final int MAX_COORD_X = 811;
     private final int MIN_STUDENTS_COUNT = 0;
@@ -21,8 +21,8 @@ public class Asker { // Кажется закончил, останется то
     private final int MIN_WEIGHT_ADMIN = 0;
     private boolean personExist;
 
-    public Asker(Scanner usr) {
-        this.userScan = usr;
+    public Asker(ConsoleClient consoleClient) {
+        this.consoleClient= consoleClient;
         fileMode = false;
         personExist = true;
     }
@@ -379,11 +379,7 @@ public class Asker { // Кажется закончил, останется то
     }
 
     private String readLine(){
-        if (fileMode){
-            Scanner scriptScanner = ConsoleClient.getScriptScanner();
-            return scriptScanner.nextLine().trim();
-        }
-        return userScan.nextLine().trim();
+        return consoleClient.readLine();
     }
 
     public static void setFileMode() {

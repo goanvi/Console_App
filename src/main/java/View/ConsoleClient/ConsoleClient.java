@@ -3,20 +3,20 @@ package View.ConsoleClient;
 import Controller.CommandManager;
 import Model.Exceptions.IncorrectScriptException;
 import View.Asker;
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.Console;
 import java.util.*;
 
 public class ConsoleClient {
     CommandManager commandManager;
-    Scanner scanner;
+    Console console;
     static Scanner scriptScanner;
     Deque<String> files = new ArrayDeque<>();
     Deque<Scanner> scanners = new ArrayDeque<>();
 
-    public ConsoleClient(CommandManager commandManager, Scanner scanner) {
+    public ConsoleClient(CommandManager commandManager, Console console) {
         this.commandManager = commandManager;
-        this.scanner = scanner;
+        this.console = console;
     }
 
     public void interactiveMode(){
@@ -25,7 +25,7 @@ public class ConsoleClient {
             while (true){
                 println("");
                 println("Введите команду");
-                String[] input = (scanner.nextLine().trim()+" ").split(" ", 2);
+                String[] input = (console.readLine().trim()+" ").split(" ", 2);
                 commandManager.callCommand(input[0],input[1]);
             }
         }catch (IncorrectScriptException exception){
@@ -64,6 +64,18 @@ public class ConsoleClient {
             printError(exception.getMessage());
         }
 
+    }
+
+    public Console getConsole(){
+        return console;
+    }
+
+    public String readLine(){
+        if (Asker.getFileMode()){
+            Scanner scriptScanner = ConsoleClient.getScriptScanner();
+            return scriptScanner.nextLine().trim();
+        }
+        return getConsole().readLine().trim();
     }
 
     public static Scanner getScriptScanner(){

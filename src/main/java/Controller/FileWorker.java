@@ -17,7 +17,8 @@ public class FileWorker {
         }
     }
 
-    public void writer(String data, String file) throws IOException{
+    public void writer(String data, String file) throws IOException,SecurityException{
+
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.write(data);
         } catch (FileNotFoundException exception) {

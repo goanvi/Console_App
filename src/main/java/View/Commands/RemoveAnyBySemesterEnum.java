@@ -14,13 +14,13 @@ import java.util.Scanner;
 
 public class RemoveAnyBySemesterEnum extends AbstractCommand{
     CollectionManager collectionManager;
-    Scanner scanner;
+    ConsoleClient consoleClient;
 
-    public RemoveAnyBySemesterEnum(CollectionManager manager, Scanner scanner) {
+    public RemoveAnyBySemesterEnum(CollectionManager manager, ConsoleClient consoleClient) {
         super("Remove_any_by_semester_enum", "Удаляет из коллекции один элемент," +
                 " значение поля semesterEnum которого эквивалентно заданному");
         this.collectionManager = manager;
-        this.scanner = scanner;
+        this.consoleClient = consoleClient;
     }
 
     @Override
@@ -30,10 +30,11 @@ public class RemoveAnyBySemesterEnum extends AbstractCommand{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите семестр обучения");
                 ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    input = scriptScanner.nextLine().trim();
-                }else input = scanner.nextLine().trim();
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    input = scriptScanner.nextLine().trim();
+//                }else input = scanner.nextLine().trim();
+                input = consoleClient.readLine();
                 Semester semester = Semester.equals(input);
                 collectionManager.remove(collectionManager.getAnyBySemesterEnum(semester));
                 ConsoleClient.println("Элемент успешно удален!");

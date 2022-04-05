@@ -58,7 +58,7 @@ public class CollectionManager { //Надо будет дописать loadColl
         }
     }
 
-    public void saveCollection(String file) throws IOException {
+    public void saveCollection(String file) throws IOException,SecurityException {
         if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция пуста");
         fileWorker.writer(parser.toCSV(studyGroupCollection),file);
         lastSaveTime = LocalDateTime.now();

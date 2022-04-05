@@ -19,9 +19,9 @@ public class Info extends AbstractCommand {
     public boolean execute(String argument) throws IncorrectScriptException{
         try {
             if (argument.isEmpty()) {
-                ConsoleClient.println(collectionManager.getCollectionType());
-                ConsoleClient.println(collectionManager.getCollectionSize());
-                ConsoleClient.println(collectionManager.getLastLoadTime());
+                ConsoleClient.println("Коллекция типа: " + collectionManager.getCollectionType());
+                ConsoleClient.println("Размер коллекции: " + collectionManager.getCollectionSize());
+                ConsoleClient.println("Время последней инициализации: " + collectionManager.getLastLoadTime());
                 ConsoleClient.println("Информация о коллекции успешно выведена!");
                 return true;
             } else throw new WrongCommandInputException();

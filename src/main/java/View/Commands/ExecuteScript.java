@@ -15,12 +15,10 @@ import java.util.Set;
 
 public class ExecuteScript extends AbstractCommand{
     ConsoleClient consoleClient;
-    Scanner scanner;
 
-    public ExecuteScript(ConsoleClient consoleClient, Scanner scanner) {
+    public ExecuteScript(ConsoleClient consoleClient) {
         super("Execute_script", "Считывает и исполняет скрипт из указанного файла");
         this.consoleClient = consoleClient;
-        this.scanner = scanner;
     }
 
     @Override
@@ -29,10 +27,11 @@ public class ExecuteScript extends AbstractCommand{
         try {
             if (argument.isEmpty()) {
                 ConsoleClient.println("Введите путь к файлу!");
-                if (Asker.getFileMode()) {
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    file = scriptScanner.nextLine().trim();
-                }else file = scanner.nextLine().trim();
+//                if (Asker.getFileMode()) {
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    file = scriptScanner.nextLine().trim();
+//                }else file = scanner.nextLine().trim();
+                file = consoleClient.readLine();
                 if (consoleClient.getFiles().contains(file)) throw new ScriptLoopingException();
                 consoleClient.getFiles().add(file);
                 consoleClient.fileMode(new Scanner(new File(file)));

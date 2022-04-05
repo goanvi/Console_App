@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class RemoveGreater extends AbstractCommand{
     CollectionManager collectionManager;
-    Scanner scanner;
-    public RemoveGreater(CollectionManager collectionManager, Scanner scanner) {
+    ConsoleClient consoleClient;
+    public RemoveGreater(CollectionManager collectionManager, ConsoleClient consoleClient) {
         super("Remove_greater", "Удалить из коллекции все элементы, превышающие заданный");
         this.collectionManager = collectionManager;
-        this.scanner =scanner;
+        this.consoleClient = consoleClient;
     }
 
     @Override
@@ -25,11 +25,11 @@ public class RemoveGreater extends AbstractCommand{
         try{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите id элемента");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    input = scriptScanner.nextLine().trim();
-                }else input = scanner.nextLine().trim();
-                int inputInt = Integer.parseInt(input);
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    input = scriptScanner.nextLine().trim();
+//                }else input = scanner.nextLine().trim();
+                int inputInt = Integer.parseInt(consoleClient.readLine());
                 if (!IdManager.containsStudyGroupID(inputInt)) throw new IncorrectInputException();
                 StudyGroup group = collectionManager.getByID(inputInt);
                 collectionManager.removeGreater(group);

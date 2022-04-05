@@ -15,11 +15,11 @@ import java.util.Scanner;
 
 public class RemoveLower extends AbstractCommand{
     CollectionManager collectionManager;
-    Scanner scanner;
-    public RemoveLower(CollectionManager collectionManager, Scanner scanner) {
+    ConsoleClient consoleClient;
+    public RemoveLower(CollectionManager collectionManager, ConsoleClient consoleClient) {
         super("Remove_lower","Удалить из коллекции все элементы, меньшие, чем заданный");
         this.collectionManager = collectionManager;
-        this.scanner = scanner;
+        this.consoleClient =consoleClient;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class RemoveLower extends AbstractCommand{
         try{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите id элемента!");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    input = scriptScanner.nextLine().trim();
-                }else input = scanner.nextLine().trim();
-                int inputInt = Integer.parseInt(input);
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    input = scriptScanner.nextLine().trim();
+//                }else input = scanner.nextLine().trim();
+                int inputInt = Integer.parseInt(consoleClient.readLine());
                 if (!IdManager.containsStudyGroupID(inputInt)) throw new IncorrectInputException();
                 StudyGroup group = collectionManager.getByID(inputInt);
                 collectionManager.removeLower(group);

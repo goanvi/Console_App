@@ -12,10 +12,10 @@ import java.util.Scanner;
 
 public class Save extends AbstractCommand{
     CollectionManager collectionManager;
-    Scanner scanner;
-    public Save(Scanner scanner, CollectionManager manager) {
+    ConsoleClient consoleClient;
+    public Save(ConsoleClient consoleClient, CollectionManager manager) {
         super("Save", "Сохраняет коллекцию в файл");
-        this.scanner=scanner;
+        this.consoleClient =consoleClient;
         this.collectionManager = manager;
     }
 
@@ -25,15 +25,18 @@ public class Save extends AbstractCommand{
         try {
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите ссылку на файл!");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    input = scriptScanner.nextLine().trim();
-                }else input = scanner.nextLine().trim();
-                collectionManager.saveCollection(input);
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    input = scriptScanner.nextLine().trim();
+//                }else input = scanner.nextLine().trim();
+                collectionManager.saveCollection(consoleClient.readLine());
                 ConsoleClient.println("Коллекция успешно сохранена!");
                 return true;
             }else throw new WrongCommandInputException();
 
+        }catch (SecurityException exception){
+            ConsoleClient.printError("Ошибка прав доступа к файлу!");
+            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");

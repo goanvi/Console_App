@@ -9,21 +9,17 @@ import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
 import View.Asker;
 import View.ConsoleClient.ConsoleClient;
-
-import java.util.Arrays;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
-import java.util.UUID;
 
 public class UpdateId extends AbstractCommand{
     CollectionManager collectionManager;
-    Scanner scanner;
+    ConsoleClient consoleClient;
     Asker asker;
 
-    public UpdateId(CollectionManager collectionManager, Scanner scanner, Asker asker) {
+    public UpdateId(CollectionManager collectionManager, ConsoleClient consoleClient, Asker asker) {
         super("Update_id", "Обновляет значение элемента коллекции, id которого равен заданному");
         this.collectionManager = collectionManager;
-        this.scanner = scanner;
+        this.consoleClient =consoleClient;
         this.asker = asker;
     }
 
@@ -38,7 +34,7 @@ public class UpdateId extends AbstractCommand{
                     "Semester\n" +
                     "Group admin");
             ConsoleClient.println("Запишите все изменяемые параметры в строчку через запятую");
-            String[] parameters = scanner.nextLine().trim().split(",");
+            String[] parameters = consoleClient.readLine().split(",");
             return asker.changeParameters(parameters, studyGroup);
         } catch (NoSuchElementException exception){
             ConsoleClient.printError("Значение поля не распознано!");
@@ -56,11 +52,11 @@ public class UpdateId extends AbstractCommand{
         try{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите id элемента, которого вы хотите изменить:");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    input = scriptScanner.nextLine().trim();
-                }else input = scanner.nextLine().trim();
-                Integer inputInt = Integer.parseInt(input);
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    input = scriptScanner.nextLine().trim();
+//                }else input = scanner.nextLine().trim();
+                Integer inputInt = Integer.parseInt(consoleClient.readLine());
                 if (!IdManager.containsStudyGroupID(inputInt))
                     throw new IncorrectInputException();
                 StudyGroup group = collectionManager.getByID(inputInt);

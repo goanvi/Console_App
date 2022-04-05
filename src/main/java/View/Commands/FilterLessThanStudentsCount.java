@@ -14,13 +14,13 @@ import java.util.Scanner;
 
 public class FilterLessThanStudentsCount extends AbstractCommand {
     CollectionManager collectionManager;
-    Scanner scanner;
+    ConsoleClient consoleClient;
 
-    public FilterLessThanStudentsCount(CollectionManager manager, Scanner scanner) {
+    public FilterLessThanStudentsCount(CollectionManager manager, ConsoleClient consoleClient) {
         super("Filter_less_than_students_count", "Выводит элементы, значение поля studentsCount" +
                 " которых меньше заданного");
         this.collectionManager = manager;
-        this.scanner = scanner;
+        this.consoleClient = consoleClient;
     }
 
     @Override
@@ -29,10 +29,11 @@ public class FilterLessThanStudentsCount extends AbstractCommand {
         try {
             if (argument.isEmpty()) {
                 ConsoleClient.println("Введите количество учеников");
-                if (Asker.getFileMode()){
-                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-                    studCount = Long.parseLong(scriptScanner.nextLine().trim());
-                }else studCount = Long.parseLong(scanner.nextLine().trim());
+//                if (Asker.getFileMode()){
+//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+//                    studCount = Long.parseLong(scriptScanner.nextLine().trim());
+//                }else studCount = Long.parseLong(scanner.nextLine().trim());
+                studCount = Long.parseLong(consoleClient.readLine());
                 List<StudyGroup> output = collectionManager.getLessThanStudentsCount(studCount);
                 if (output.isEmpty()) ConsoleClient.println("Во всех группах количество человек больше");
                 else {

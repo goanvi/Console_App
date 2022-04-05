@@ -11,11 +11,13 @@ import java.util.Map;
 
 
 public class Help extends AbstractCommand{
-    Map<String, AbstractCommand> commands;
+    CommandManager commandManager;
+    Map<String,AbstractCommand> commands;
 
-    public Help(Map<String, AbstractCommand> commands) {
+    public Help(CommandManager commandManager) {
         super("Help", "Выводит информацию по доступным командам");
-        this.commands = commands;
+        this.commandManager = commandManager;
+        this.commands = commandManager.getCommands();
     }
 
     @Override
