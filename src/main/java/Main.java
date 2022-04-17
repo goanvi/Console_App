@@ -1,8 +1,8 @@
-import Controller.CollectionManager;
-import Controller.CommandManager;
-import View.Utility.Asker;
-import View.Commands.*;
-import View.ConsoleClient.ConsoleClient;
+import controller.CollectionManager;
+import controller.CommandManager;
+import view.utility.Asker;
+import view.commands.*;
+import view.console.ConsoleClient;
 
 import java.io.Console;
 import java.util.LinkedHashMap;
