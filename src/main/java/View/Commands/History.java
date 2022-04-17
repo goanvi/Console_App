@@ -2,10 +2,8 @@ package View.Commands;
 
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
-
-import java.util.Map;
 
 public class History extends  AbstractCommand{
     static private final int HISTORY_BUFFER_SIZE = 11;

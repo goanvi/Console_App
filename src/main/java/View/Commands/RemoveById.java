@@ -1,15 +1,13 @@
 package View.Commands;
 
 import Controller.CollectionManager;
-import Controller.IdManager;
 import Model.Exceptions.IncorrectInputException;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class RemoveById extends AbstractCommand {
     CollectionManager collectionManager;

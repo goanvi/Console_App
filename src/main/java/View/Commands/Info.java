@@ -3,8 +3,10 @@ package View.Commands;
 import Controller.CollectionManager;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
+
+import java.time.format.DateTimeFormatter;
 
 public class Info extends AbstractCommand {
     CollectionManager collectionManager;
@@ -21,7 +23,7 @@ public class Info extends AbstractCommand {
             if (argument.isEmpty()) {
                 ConsoleClient.println("Коллекция типа: " + collectionManager.getCollectionType());
                 ConsoleClient.println("Размер коллекции: " + collectionManager.getCollectionSize());
-                ConsoleClient.println("Время последней инициализации: " + collectionManager.getLastLoadTime());
+                ConsoleClient.println("Время последней инициализации: " + collectionManager.getLastLoadTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
                 ConsoleClient.println("Информация о коллекции успешно выведена!");
                 return true;
             } else throw new WrongCommandInputException();

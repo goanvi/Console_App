@@ -5,12 +5,11 @@ import Model.Exceptions.EmptyCollectionException;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class FilterLessThanStudentsCount extends AbstractCommand {
     CollectionManager collectionManager;

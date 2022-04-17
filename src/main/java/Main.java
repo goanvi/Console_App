@@ -1,19 +1,12 @@
 import Controller.CollectionManager;
 import Controller.CommandManager;
-import Controller.FileWorker;
-import Controller.ParserCSV;
-import Model.Exceptions.IncorrectNameEnumException;
-import Model.Semester;
-import Model.StudyGroup;
-import View.Asker;
+import View.Utility.Asker;
 import View.Commands.*;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.Console;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -63,7 +56,6 @@ public class Main {
         ExecuteScript executeScript = new ExecuteScript(consoleClient);
         commandMap.put(executeScript.getName(),executeScript);
         consoleClient.interactiveMode();
-
 
 //        collectionManager.loadCollection("CSV.csv");
 //        Scanner scanner = new Scanner(System.in);

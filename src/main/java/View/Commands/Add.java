@@ -4,7 +4,7 @@ import Controller.CollectionManager;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 public class Add extends AbstractCommand{

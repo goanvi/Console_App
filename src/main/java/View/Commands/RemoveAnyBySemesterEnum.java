@@ -6,11 +6,10 @@ import Model.Exceptions.IncorrectNameEnumException;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.Semester;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class RemoveAnyBySemesterEnum extends AbstractCommand{
     CollectionManager collectionManager;

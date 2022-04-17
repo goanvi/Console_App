@@ -3,15 +3,13 @@ package View.Commands;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.ScriptLoopingException;
 import Model.Exceptions.WrongCommandInputException;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Set;
 
 public class ExecuteScript extends AbstractCommand{
     ConsoleClient consoleClient;
@@ -23,7 +21,8 @@ public class ExecuteScript extends AbstractCommand{
 
     @Override
     public boolean execute(String argument) throws IncorrectScriptException {
-        String file;
+        String input;
+        File file;
         try {
             if (argument.isEmpty()) {
                 ConsoleClient.println("Введите путь к файлу!");
@@ -31,10 +30,11 @@ public class ExecuteScript extends AbstractCommand{
 //                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
 //                    file = scriptScanner.nextLine().trim();
 //                }else file = scanner.nextLine().trim();
-                file = consoleClient.readLine();
-                if (consoleClient.getFiles().contains(file)) throw new ScriptLoopingException();
-                consoleClient.getFiles().add(file);
-                consoleClient.fileMode(new Scanner(new File(file)));
+                input = consoleClient.readLine();
+                file = new File(input);
+                if (consoleClient.getFiles().contains(file.getAbsolutePath())) throw new ScriptLoopingException();
+                consoleClient.getFiles().add(file.getAbsolutePath());
+                consoleClient.fileMode(new Scanner(file));
                 ConsoleClient.println("Скрипт из файла " + consoleClient.getFiles().getLast() + " успешно выполнен!");
                 consoleClient.getFiles().removeLast();
                 return true;

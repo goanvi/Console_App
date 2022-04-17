@@ -2,10 +2,12 @@ package View.ConsoleClient;
 
 import Controller.CommandManager;
 import Model.Exceptions.IncorrectScriptException;
-import View.Asker;
+import View.Utility.Asker;
 
 import java.io.Console;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
 
 public class ConsoleClient {
     CommandManager commandManager;
@@ -25,7 +27,7 @@ public class ConsoleClient {
             while (true){
                 println("");
                 println("Введите команду");
-                String[] input = (console.readLine().trim()+" ").split(" ", 2);
+                String[] input = (readLine()+" ").split(" ", 2);
                 commandManager.callCommand(input[0],input[1]);
             }
         }catch (IncorrectScriptException exception){
@@ -71,11 +73,16 @@ public class ConsoleClient {
     }
 
     public String readLine(){
+        try{
         if (Asker.getFileMode()){
             Scanner scriptScanner = ConsoleClient.getScriptScanner();
             return scriptScanner.nextLine().trim();
         }
         return getConsole().readLine().trim();
+        }catch (NullPointerException exception){
+            readLine();
+        }
+        return null;
     }
 
     public static Scanner getScriptScanner(){

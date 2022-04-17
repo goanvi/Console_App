@@ -6,9 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 public class StudyGroup implements Serializable{ //Потребуется переделать конструкторы для корректной работы по ТЗ
@@ -93,6 +91,26 @@ public class StudyGroup implements Serializable{ //Потребуется пер
 
     public Integer getID(){
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public FormOfEducation getFormOfEducation() {
+        return formOfEducation;
+    }
+
+    public Person getGroupAdmin() {
+        return groupAdmin;
     }
 
     public Semester getSemesterEnum(){

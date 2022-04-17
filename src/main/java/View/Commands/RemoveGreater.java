@@ -4,11 +4,10 @@ import Controller.CollectionManager;
 import Controller.IdManager;
 import Model.Exceptions.*;
 import Model.StudyGroup;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class RemoveGreater extends AbstractCommand{
     CollectionManager collectionManager;

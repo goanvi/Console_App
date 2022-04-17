@@ -7,11 +7,10 @@ import Model.Exceptions.IncorrectInputException;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class RemoveLower extends AbstractCommand{
     CollectionManager collectionManager;

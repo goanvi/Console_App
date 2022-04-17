@@ -3,12 +3,11 @@ package View.Commands;
 import Controller.CollectionManager;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
-import View.Asker;
+import View.Utility.Asker;
 import View.ConsoleClient.ConsoleClient;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Save extends AbstractCommand{
     CollectionManager collectionManager;

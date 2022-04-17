@@ -1,18 +1,11 @@
 package Controller;
 
-import Controller.StudyGroupComparator;
-import Model.*;
+import Model.StudyGroup;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 public class ParserCSV { // Подумать, как сделать обобщенный парсер
     public String toCSV(Collection<StudyGroup> collection) {

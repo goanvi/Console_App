@@ -1,4 +1,4 @@
-package View;
+package View.Utility;
 
 import Controller.IdManager;
 import Model.*;
@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.UUID;
 
 public class Asker { // Кажется закончил, останется только дописать геттеры и сеттеры по необходимости, проверить все exceptions

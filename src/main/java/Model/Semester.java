@@ -7,11 +7,11 @@ public enum Semester {
     FIFTH,
     SEVENTH;
     public static Semester equals(String name) throws IncorrectNameEnumException {
-        return switch (name.toLowerCase()) {
-            case "third" -> Semester.THIRD;
-            case "fifth" -> Semester.FIFTH;
-            case "seventh" -> Semester.SEVENTH;
-            default -> throw new IncorrectNameEnumException();
-        };
+        switch (name.toLowerCase()) {
+            case "third" : return Semester.THIRD;
+            case "fifth" : return Semester.FIFTH;
+            case "seventh" : return Semester.SEVENTH;
+            default : throw new IncorrectNameEnumException();
+        }
     }
 }

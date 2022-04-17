@@ -4,11 +4,10 @@ import Controller.CollectionManager;
 import Model.Exceptions.IncorrectScriptException;
 import Model.Exceptions.WrongCommandInputException;
 import Model.StudyGroup;
-import View.Asker;
 import View.ConsoleClient.ConsoleClient;
+import View.Utility.Asker;
+import View.Utility.Formatter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeSet;
 
 public class Show extends AbstractCommand{
@@ -19,13 +18,13 @@ public class Show extends AbstractCommand{
         this.collectionManager = collectionManager;
     }
 
-    private String formatOutput(TreeSet<StudyGroup> groups){
-        ArrayList<String> strings = new ArrayList<>();
-        groups.forEach(group -> {
-            strings.add(group.toString().replace(",","\n")+"\n\n");
-        });
-        return strings.toString().replaceAll("[\\[\\],]","");
-    }
+//    private String formatOutput(TreeSet<StudyGroup> groups){
+//        ArrayList<String> strings = new ArrayList<>();
+//        groups.forEach(group -> {
+//            strings.add(group.toString().replace(",","\n")+"\n\n");
+//        });
+//        return strings.toString().replaceAll("[\\[\\],]","");
+//    }
     @Override
     public boolean execute(String argument) throws IncorrectScriptException {
         try{
@@ -34,7 +33,9 @@ public class Show extends AbstractCommand{
                 if (studyGroups.isEmpty()) {
                     ConsoleClient.println("Коллекция пуста");
                 }else {
-                ConsoleClient.println(" " + formatOutput(collectionManager.getCollection()));
+                for (StudyGroup group:studyGroups){
+                    System.out.println(Formatter.format(group));
+                }
                 ConsoleClient.println("Коллекция успешно выведена!");
                 }
                 return true;

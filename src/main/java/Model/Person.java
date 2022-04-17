@@ -26,6 +26,22 @@ public class Person{ // Помнить что этот класс может б�
         IdManager.savePersonID(passportID);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getBirthday() {
+        return birthday;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public String getPassportID() {
+        return passportID;
+    }
+
     @Override
     public String toString() {
         return  "name=" + name+
