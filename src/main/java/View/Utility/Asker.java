@@ -53,11 +53,12 @@ public class Asker { // Кажется закончил, останется то
 
     public Integer askCoordinateX() throws IncorrectScriptException {
         String strX;
-        Integer x;
+        int x;
         while (true) {
             try {
-                ConsoleClient.println("Введите координату X.");
+                ConsoleClient.println("Введите координату X");
                 ConsoleClient.println("Максимальное значение координаты X = " + MAX_COORD_X);
+                ConsoleClient.println("Число должно быть целочисленным");
                 strX=readLine();
                 if (fileMode) ConsoleClient.println(strX);
                 if (strX.equals("")) throw new CannotBeNullException();
@@ -90,6 +91,7 @@ public class Asker { // Кажется закончил, останется то
         while (true) {
             try {
                 ConsoleClient.println("Введите координату Y");
+                ConsoleClient.println("Число должно быть целочисленным");
                 strY = readLine();
                 if (fileMode) ConsoleClient.println(strY);
                 y = Integer.parseInt(strY);
@@ -122,6 +124,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите количество студентов в группе.");
                 ConsoleClient.println("Значение должно быть больше " + MIN_STUDENTS_COUNT);
+                ConsoleClient.println("Число должно быть целочисленным");
                 strStud = readLine();
                 if (fileMode) ConsoleClient.println(strStud);
                 stud = Long.parseLong(strStud);
@@ -151,6 +154,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите среднюю оценку в группе.");
                 ConsoleClient.println("Значение должно быть больше " + MIN_AVERAGE_MARK);
+                ConsoleClient.println("Число может быть дробным");
                 strMark =readLine();
                 if (fileMode) ConsoleClient.println(strMark);
                 mark = Double.parseDouble(strMark);
@@ -292,6 +296,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("Введите вес админа");
                 ConsoleClient.println("Значение поля должно быть больше " + MIN_WEIGHT_ADMIN);
+                ConsoleClient.println("Число может быть дробным");
                 strWeight = readLine();
                 if (fileMode) ConsoleClient.println(strWeight);
                 weight = Float.parseFloat(strWeight);

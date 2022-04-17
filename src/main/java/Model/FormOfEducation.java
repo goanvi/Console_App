@@ -3,9 +3,9 @@ package Model;
 import Model.Exceptions.IncorrectNameEnumException;
 
 public enum FormOfEducation {
-    DISTANCE_EDUCATION("Distance"),
-    FULL_TIME_EDUCATION("Full time"),
-    EVENING_CLASSES("Evening");
+    DISTANCE_EDUCATION("Дистанционная"),
+    FULL_TIME_EDUCATION("Очная"),
+    EVENING_CLASSES("Вечерняя");
 
     private final String name;
 
@@ -20,5 +20,9 @@ public enum FormOfEducation {
             case "evening": return FormOfEducation.EVENING_CLASSES;
             default: throw new IncorrectNameEnumException();
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }

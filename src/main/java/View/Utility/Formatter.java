@@ -15,8 +15,8 @@ public class Formatter {
                  "\nдата создания: " + group.getCreationDate() +
                  "\nколичество учеников: " + group.getStudentsCount() +
                  "\nсредняя оценка: " + group.getAverageMark() +
-                 "\nформа обучения: " + group.getFormOfEducation() +
-                 "\nсеместр обучения: " + group.getSemesterEnum() + "\n";
+                 "\nформа обучения: " + group.getFormOfEducation().getName() +
+                 "\nсеместр обучения: " + group.getSemesterEnum().getName() + "\n";
 
          else
              return "идентификатор: " + group.getID() +
@@ -27,8 +27,8 @@ public class Formatter {
                  "\nдата создания: " + group.getCreationDate() +
                  "\nколичество учеников: " + group.getStudentsCount() +
                  "\nсредняя оценка: " + group.getAverageMark() +
-                 "\nформа обучения: " + group.getFormOfEducation() +
-                 "\nсеместр обучения: " + group.getSemesterEnum() +
+                 "\nформа обучения: " + group.getFormOfEducation().getName() +
+                 "\nсеместр обучения: " + group.getSemesterEnum().getName() +
                  "\nадмин группы: " +
                  "\n    идентификатор: " + group.getGroupAdmin().getPassportID() +
                  "\n    имя: " + group.getGroupAdmin().getName() +
