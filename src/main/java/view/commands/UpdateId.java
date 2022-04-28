@@ -50,13 +50,13 @@ public class UpdateId extends AbstractCommand{
     public boolean execute(String argument)throws IncorrectScriptException{
         String input;
         try{
-            if (argument.isEmpty()){
-                ConsoleClient.println("Введите id элемента, которого вы хотите изменить:");
-//                if (Asker.getFileMode()){
-//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-//                    input = scriptScanner.nextLine().trim();
-//                }else input = scanner.nextLine().trim();
-                Integer inputInt = Integer.parseInt(consoleClient.readLine());
+            if (!argument.isEmpty()){
+//                ConsoleClient.println("Введите id элемента, которого вы хотите изменить:");
+////                if (Asker.getFileMode()){
+////                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+////                    input = scriptScanner.nextLine().trim();
+////                }else input = scanner.nextLine().trim();
+                Integer inputInt = Integer.parseInt(argument.trim());
                 if (!IdManager.containsStudyGroupID(inputInt))
                     throw new IncorrectInputException();
                 StudyGroup group = collectionManager.getByID(inputInt);

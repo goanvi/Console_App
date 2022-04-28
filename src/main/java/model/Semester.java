@@ -3,9 +3,9 @@ package model;
 import model.Exceptions.IncorrectNameEnumException;
 
 public enum Semester {
-    THIRD("Третий"),
-    FIFTH("Пятый"),
-    SEVENTH("Седьмой");
+    THIRD("Три"),
+    FIFTH("Пять"),
+    SEVENTH("Семь");
 
     private final String name;
 
@@ -15,9 +15,9 @@ public enum Semester {
 
     public static Semester equals(String name) throws IncorrectNameEnumException {
         switch (name.toLowerCase()) {
-            case "third" : return Semester.THIRD;
-            case "fifth" : return Semester.FIFTH;
-            case "seventh" : return Semester.SEVENTH;
+            case "три" : return Semester.THIRD;
+            case "пять" : return Semester.FIFTH;
+            case "семь" : return Semester.SEVENTH;
             default : throw new IncorrectNameEnumException();
         }
     }

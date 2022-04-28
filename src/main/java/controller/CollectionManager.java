@@ -23,6 +23,9 @@ public class CollectionManager { //Надо будет дописать loadColl
         this.fileWorker = new FileWorker(readFile);
         this.parser = new ParserCSV();
         loadCollection(readFile);
+        for (StudyGroup group: studyGroupCollection){
+            IdManager.setStudyGroupID(group.getID());
+        }
     }
 
     public void clearCollection() {
@@ -65,7 +68,7 @@ public class CollectionManager { //Надо будет дописать loadColl
     }
 
     public void loadCollection(String file) {
-        studyGroupCollection = parser.csvFromData(fileWorker.reader(file));
+        studyGroupCollection = ParserCSV.readFile(file);
         lastLoadTime = LocalDateTime.now();
     }
 

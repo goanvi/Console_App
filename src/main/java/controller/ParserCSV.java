@@ -1,24 +1,46 @@
 package controller;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import model.StudyGroup;
+import view.console.ConsoleClient;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class ParserCSV { // Подумать, как сделать обобщенный парсер
-    public String toCSV(Collection<StudyGroup> collection) {
+    public static String toCSV(Collection<StudyGroup> collection) {
         StringBuilder stringBuilder = new StringBuilder("");
         Object[] collArray = collection.toArray();
-        String[] header = makeStudyGroupHeader();
-        stringBuilder.append(Arrays.toString(header).replace("[","").replace("]",""));
-        stringBuilder.append("\n");
+//        String[] header = makeStudyGroupHeader();
+//        stringBuilder.append(Arrays.toString(header).replace("[","").replace("]",""));
+//        stringBuilder.append("\n");
         for (Object obj : collArray) {
             stringBuilder.append(Arrays.toString(makeData(obj)).replace("[","").replace("]",""));
             stringBuilder.append("\n");
         }
         return String.valueOf(stringBuilder);
+    }
+
+    public static TreeSet<StudyGroup> readFile (String file){
+        Comparator<StudyGroup> sgc = new StudyGroupComparator(); //Будут использовать в main, добовление коллекции через addAll
+        TreeSet<StudyGroup> collection = new TreeSet<>(sgc);
+        System.out.println(file);
+        try(CSVReader reader = new CSVReader(new FileReader(file))){
+            List<String[]> input = reader.readAll();
+            input.forEach((object)-> {
+                collection.add(new StudyGroup(object));
+            });
+        }catch (FileNotFoundException exception){
+            ConsoleClient.printError("Файл не найден!");
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+        return collection;
     }
 
     public TreeSet<StudyGroup> csvFromData (String string){
@@ -100,7 +122,7 @@ public class ParserCSV { // Подумать, как сделать обобще
         String[] data = new String[13];
         for (int i = 0; i < recordDt.length; i++) {
             String[] sword = recordDt[i].split("=");
-            data[i] = sword[sword.length -1];
+            data[i] = "\"" + sword[sword.length -1] + "\"";
         }
         return data;
     }

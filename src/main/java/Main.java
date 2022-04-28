@@ -55,6 +55,7 @@ public class Main {
         commandMap.put(updateId.getName(),updateId);
         ExecuteScript executeScript = new ExecuteScript(consoleClient);
         commandMap.put(executeScript.getName(),executeScript);
+
         consoleClient.interactiveMode();
 
 //        collectionManager.loadCollection("CSV.csv");

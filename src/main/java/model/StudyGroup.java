@@ -65,21 +65,21 @@ public class StudyGroup implements Serializable{ //Потребуется пер
     }
 
     public StudyGroup(String[] string) {
-        this.id = Integer.parseInt(string[1]);
-        this.name = string[2];
-        this.coordinates = new Coordinates(Integer.parseInt(string[3]), Integer.parseInt(string[4]));
-        this.creationDate = LocalDate.parse(string[5]);
-        this.studentsCount = Long.parseLong(string[6]);
-        this.averageMark = Double.parseDouble(string[7]);
-        this.formOfEducation = FormOfEducation.valueOf(string[8]);
-        this.semesterEnum = Semester.valueOf(string[9]);
-        if (!string[10].equals("null")) {
-            if (!string[11].equalsIgnoreCase("null")) {
-                this.groupAdmin = new Person(string[10],
-                        LocalDateTime.parse(string[11]), Float.parseFloat(string[12]), string[13]);
+        this.id = Integer.parseInt(string[0]);
+        this.name = string[1];
+        this.coordinates = new Coordinates(Integer.parseInt(string[2]), Integer.parseInt(string[3]));
+        this.creationDate = LocalDate.parse(string[4]);
+        this.studentsCount = Long.parseLong(string[5]);
+        this.averageMark = Double.parseDouble(string[6]);
+        this.formOfEducation = FormOfEducation.valueOf(string[7]);
+        this.semesterEnum = Semester.valueOf(string[8]);
+        if (!string[9].equals("null")) {
+            if (!string[10].equalsIgnoreCase("null")) {
+                this.groupAdmin = new Person(string[9],
+                        LocalDateTime.parse(string[10]), Float.parseFloat(string[11]), string[12]);
             } else {
-                this.groupAdmin = new Person(string[10],
-                        null, Float.parseFloat(string[12]), string[13]);
+                this.groupAdmin = new Person(string[9],
+                        null, Float.parseFloat(string[11]), string[12]);
             }
 
         } else groupAdmin = null;

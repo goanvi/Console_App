@@ -187,7 +187,7 @@ public class Asker { // Кажется закончил, останется то
         while (true){
             try {
                 ConsoleClient.println("\nВведите форму обучения");
-                ConsoleClient.println("Доступные формы обучения: Distance, Full time, Evening");
+                ConsoleClient.println("Доступные формы обучения: Дистанционно, Очно, Вечер");
                 strEduc=readLine();
                 if(strEduc.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strEduc);
@@ -216,7 +216,7 @@ public class Asker { // Кажется закончил, останется то
         while (true){
             try {
                 ConsoleClient.println("\nВведите семестр обучения");
-                ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
+                ConsoleClient.println("Доступные семестры обучения: Три, Пять, Семь");
                 strSem = readLine();
                 if(strSem.equals("")) throw new CannotBeNullException();
                 if (fileMode) ConsoleClient.println(strSem);
@@ -269,9 +269,10 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("\nВведите день рождения админа.");
                 ConsoleClient.println("Шаблон ввода: день недели, месяц день, год час:минута");
-                ConsoleClient.println("Пример ввода: Friday, Mar 11, 2022 12:10");
+                ConsoleClient.println("Пример ввода: dd-MM-yyyy HH:mm:ss");
                 strTime = readLine();
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy HH:mm");
                 if (strTime.equals("")) time = null;
                 else time = LocalDateTime.parse(strTime,dtf);
                 if (fileMode) ConsoleClient.println(strTime);
@@ -327,7 +328,7 @@ public class Asker { // Кажется закончил, останется то
         Person person = null;
         while (true) {
             try {
-                ConsoleClient.println("\nВы хотите указать админа группы? Y/N");
+                ConsoleClient.println("\nВы хотите указать админа группы? Да/Нет");
                 String answer = readLine();
                 if (answer.equalsIgnoreCase("Y")) { //
                     setPersonExists();
@@ -344,7 +345,6 @@ public class Asker { // Кажется закончил, останется то
                 break;
             }catch (IncorrectInputException exception) {
                 ConsoleClient.printError("Некорректный ввод ответа!");
-                ConsoleClient.println("Введите Y, если согласный и N, если не согласны!");
             } catch (NoSuchElementException exception){
                 ConsoleClient.printError("Значение поля не распознано!");
                 if (fileMode) throw new IncorrectScriptException();

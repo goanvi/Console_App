@@ -28,7 +28,7 @@ public class RemoveAnyBySemesterEnum extends AbstractCommand{
         try{
             if (argument.isEmpty()){
                 ConsoleClient.println("Введите семестр обучения");
-                ConsoleClient.println("Доступные семестры обучения: Third, Fifth, Seventh");
+                ConsoleClient.println("Доступные семестры обучения: Три, Пять, Семь");
 //                if (Asker.getFileMode()){
 //                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
 //                    input = scriptScanner.nextLine().trim();
@@ -40,7 +40,7 @@ public class RemoveAnyBySemesterEnum extends AbstractCommand{
                 return true;
             }else throw new WrongCommandInputException();
         }catch (EmptyCollectionException exception){
-            ConsoleClient.printError("Коллекция пуста!");
+            ConsoleClient.println("Коллекция пуста!");
             return true;//Не уверен, что так должно быть. Пока что считаю, что пустая коллекция не повод выбрасывать ошибку выполнения
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +

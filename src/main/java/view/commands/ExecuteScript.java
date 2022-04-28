@@ -24,14 +24,14 @@ public class ExecuteScript extends AbstractCommand{
         String input;
         File file;
         try {
-            if (argument.isEmpty()) {
-                ConsoleClient.println("Введите путь к файлу!");
-//                if (Asker.getFileMode()) {
-//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-//                    file = scriptScanner.nextLine().trim();
-//                }else file = scanner.nextLine().trim();
-                input = consoleClient.readLine();
-                file = new File(input);
+            if (!argument.isEmpty()) {
+//                ConsoleClient.println("Введите путь к файлу!");
+////                if (Asker.getFileMode()) {
+////                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+////                    file = scriptScanner.nextLine().trim();
+////                }else file = scanner.nextLine().trim();
+//                input = consoleClient.readLine();
+                file = new File(argument.trim());
                 if (consoleClient.getFiles().contains(file.getAbsolutePath())) throw new ScriptLoopingException();
                 consoleClient.getFiles().add(file.getAbsolutePath());
                 consoleClient.fileMode(new Scanner(file));

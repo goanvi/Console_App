@@ -26,13 +26,13 @@ public class FilterLessThanStudentsCount extends AbstractCommand {
     public boolean execute(String argument) throws IncorrectScriptException {
         long studCount;
         try {
-            if (argument.isEmpty()) {
-                ConsoleClient.println("Введите количество учеников");
+            if (!argument.isEmpty()) {
+//                ConsoleClient.println("Введите количество учеников");
 //                if (Asker.getFileMode()){
 //                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
 //                    studCount = Long.parseLong(scriptScanner.nextLine().trim());
 //                }else studCount = Long.parseLong(scanner.nextLine().trim());
-                studCount = Long.parseLong(consoleClient.readLine());
+                studCount = Long.parseLong(argument.trim());
                 List<StudyGroup> output = collectionManager.getLessThanStudentsCount(studCount);
                 if (output.isEmpty()) ConsoleClient.println("Во всех группах количество человек больше");
                 else {

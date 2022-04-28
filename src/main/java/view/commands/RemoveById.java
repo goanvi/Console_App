@@ -23,14 +23,14 @@ public class RemoveById extends AbstractCommand {
     public boolean execute(String argument) throws IncorrectScriptException {
         String input;
         try{
-            if (argument.isEmpty()){
-                ConsoleClient.println("Ведите id элемента!");
-//                if (Asker.getFileMode()){
-//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-//                    input = scriptScanner.nextLine().trim();
-//                }else input = scanner.nextLine().trim();
-                input = consoleClient.readLine();
-                int id = Integer.parseInt(input);
+            if (!argument.isEmpty()){
+//                ConsoleClient.println("Ведите id элемента!");
+////                if (Asker.getFileMode()){
+////                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+////                    input = scriptScanner.nextLine().trim();
+////                }else input = scanner.nextLine().trim();
+//                input = consoleClient.readLine();
+                int id = Integer.parseInt(argument.trim());
                 if (!collectionManager.getCollection().removeIf(studyGroup -> studyGroup.getID()==id))
                     throw new IncorrectInputException();
                 ConsoleClient.println("Элемент успешно удален!");
