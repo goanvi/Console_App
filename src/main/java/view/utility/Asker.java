@@ -330,7 +330,7 @@ public class Asker { // Кажется закончил, останется то
             try {
                 ConsoleClient.println("\nВы хотите указать админа группы? Да/Нет");
                 String answer = readLine();
-                if (answer.equalsIgnoreCase("Y")) { //
+                if (answer.equalsIgnoreCase("Да")) { //
                     setPersonExists();
                     String adminName = askAdminName();
                     LocalDateTime adminBirthday = askAdminBirthday();
@@ -338,7 +338,7 @@ public class Asker { // Кажется закончил, останется то
                     String adminID = IdManager.setPersonID(Math.abs(UUID.randomUUID().hashCode()));
                     person = new Person(adminName, adminBirthday, adminWeight, adminID);
                 }
-                else if (answer.equalsIgnoreCase("N")) {
+                else if (answer.equalsIgnoreCase("Нет")) {
                     setPersonDoesntExist();
                 }
                 else throw new IncorrectInputException();
@@ -359,28 +359,35 @@ public class Asker { // Кажется закончил, останется то
     public boolean changeParameters(String[] parameters, StudyGroup studyGroup) throws IncorrectScriptException{
         try {
             for (String parameter : parameters) {
-                switch (parameter.toLowerCase()) {
-                    case "name":
+                switch (parameter.toLowerCase().trim()) {
+                    case "имя":
                         studyGroup.setName(askName());
-                    case "coordinates":
+                        break;
+                    case "координаты":
                         studyGroup.setCoordinates(askCoordinates());
-                    case "students count":
+                        break;
+                    case "количество студентов":
                         studyGroup.setStudentsCount(askStudentsCount());
-                    case "average mark":
+                        break;
+                    case "средняя оценка":
                         studyGroup.setAverageMark(askAverageMark());
-                    case "from of education":
+                        break;
+                    case "форма обучения":
                         studyGroup.setFormOfEducation(askFromOfEducation());
-                    case "semester":
+                        break;
+                    case "семестр":
                         studyGroup.setSemesterEnum(askSemester());
-                    case "group admin":
+                        break;
+                    case "админ группы":
                         studyGroup.setGroupAdmin(askPerson());
+                        break;
                     default:
                         throw new IncorrectInputException();
                 }
             }
             return true;
         }catch (IncorrectInputException exception){
-            ConsoleClient.printError("Параметры группы введены неверно!");
+            ConsoleClient.printError("Параметры группы введены неверно!\n");
             if (fileMode) throw new IncorrectScriptException();
         }
         return false;

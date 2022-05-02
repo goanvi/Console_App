@@ -1,8 +1,9 @@
 import controller.CollectionManager;
 import controller.CommandManager;
-import view.utility.Asker;
+import controller.FileWorker;
 import view.commands.*;
 import view.console.ConsoleClient;
+import view.utility.Asker;
 
 import java.io.Console;
 import java.util.LinkedHashMap;
@@ -18,6 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         Console console = System.console();
+        FileWorker fileWorker = new FileWorker(System.getenv("LABA5"));
         CollectionManager collectionManager = new CollectionManager(System.getenv("LABA5"));
         Map<String, AbstractCommand> commandMap = new LinkedHashMap<>();
         CommandManager commandManager = new CommandManager(commandMap);
@@ -41,11 +43,11 @@ public class Main {
         commandMap.put(removeAnyBySemesterEnum.getName(),removeAnyBySemesterEnum);
         RemoveById removeById = new RemoveById(collectionManager,consoleClient);
         commandMap.put(removeById.getName(),removeById);
-        RemoveGreater removeGreater = new RemoveGreater(collectionManager,consoleClient);
+        RemoveGreater removeGreater = new RemoveGreater(collectionManager,consoleClient, asker);
         commandMap.put(removeGreater.getName(), removeGreater);
-        RemoveLower removeLower = new RemoveLower(collectionManager,consoleClient);
+        RemoveLower removeLower = new RemoveLower(collectionManager,consoleClient, asker);
         commandMap.put(removeLower.getName(),removeLower);
-        Save save = new Save(consoleClient, collectionManager);
+        Save save = new Save(consoleClient, collectionManager,fileWorker);
         commandMap.put(save.getName(),save);
         Show show = new Show(collectionManager);
         commandMap.put(show.getName(),show);

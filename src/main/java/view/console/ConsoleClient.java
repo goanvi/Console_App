@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class ConsoleClient {
     CommandManager commandManager;
     Console console;
-    static Scanner scriptScanner;
+    Scanner scriptScanner;
     Deque<String> files = new ArrayDeque<>();
     Deque<Scanner> scanners = new ArrayDeque<>();
 
@@ -78,7 +78,6 @@ public class ConsoleClient {
     public String readLine(){
         try{
         if (Asker.getFileMode()){
-            Scanner scriptScanner = ConsoleClient.getScriptScanner();
             return scriptScanner.nextLine().trim();
         }
         return getConsole().readLine().trim();
@@ -88,7 +87,7 @@ public class ConsoleClient {
         return null;
     }
 
-    public static Scanner getScriptScanner(){
+    public Scanner getScriptScanner(){
         return scriptScanner;
     }
 

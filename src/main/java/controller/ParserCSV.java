@@ -8,6 +8,7 @@ import view.console.ConsoleClient;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ParserCSV { // Подумать, как сделать обобщенный парсер
@@ -27,8 +28,7 @@ public class ParserCSV { // Подумать, как сделать обобще
     public static TreeSet<StudyGroup> readFile (String file){
         Comparator<StudyGroup> sgc = new StudyGroupComparator(); //Будут использовать в main, добовление коллекции через addAll
         TreeSet<StudyGroup> collection = new TreeSet<>(sgc);
-        System.out.println(file);
-        try(CSVReader reader = new CSVReader(new FileReader(file))){
+        try(CSVReader reader = new CSVReader(new FileReader(file, StandardCharsets.UTF_8))){
             List<String[]> input = reader.readAll();
             input.forEach((object)-> {
                 collection.add(new StudyGroup(object));
@@ -122,7 +122,10 @@ public class ParserCSV { // Подумать, как сделать обобще
         String[] data = new String[13];
         for (int i = 0; i < recordDt.length; i++) {
             String[] sword = recordDt[i].split("=");
-            data[i] = "\"" + sword[sword.length -1] + "\"";
+            data[i] = sword[sword.length -1] ;
+        }
+        for (int i = 0; i < data.length; i++){
+            data[i] = "\"" + data[i] + "\"";
         }
         return data;
     }

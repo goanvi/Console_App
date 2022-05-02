@@ -5,7 +5,6 @@ import model.Semester;
 import model.StudyGroup;
 import view.console.ConsoleClient;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +13,15 @@ import java.util.TreeSet;
 public class CollectionManager { //Надо будет дописать loadCollection
     private final StudyGroupComparator comparator = new StudyGroupComparator();
     private TreeSet<StudyGroup> studyGroupCollection = new TreeSet<>(comparator);
-    FileWorker fileWorker;
-    ParserCSV parser;
+//    FileWorker fileWorker;
     LocalDateTime lastSaveTime;
     LocalDateTime lastLoadTime;
 
     public CollectionManager(String readFile) {
-        this.fileWorker = new FileWorker(readFile);
-        this.parser = new ParserCSV();
+//        this.fileWorker = new FileWorker(readFile);
         loadCollection(readFile);
         for (StudyGroup group: studyGroupCollection){
-            IdManager.setStudyGroupID(group.getID());
+            IdManager.saveStudyGroupID(group.getID());
         }
     }
 
@@ -60,12 +57,17 @@ public class CollectionManager { //Надо будет дописать loadColl
             }
         }
     }
-
-    public void saveCollection(String file) throws IOException,SecurityException {
-        if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция пуста");
-        fileWorker.writer(parser.toCSV(studyGroupCollection),file);
-        lastSaveTime = LocalDateTime.now();
-    }
+//    public void saveCollection() throws IOException,SecurityException {
+//        if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция пуста");
+//        fileWorker.writer(ParserCSV.toCSV(studyGroupCollection));
+//        lastSaveTime = LocalDateTime.now();
+//    }
+//
+//    public void saveCollection(String file) throws IOException,SecurityException {
+//        if (studyGroupCollection.size() == 0) ConsoleClient.println("Коллекция пуста");
+//        fileWorker.writer(ParserCSV.toCSV(studyGroupCollection),file);
+//        lastSaveTime = LocalDateTime.now();
+//    }
 
     public void loadCollection(String file) {
         studyGroupCollection = ParserCSV.readFile(file);
@@ -128,6 +130,10 @@ public class CollectionManager { //Надо будет дописать loadColl
 
     public LocalDateTime getLastSaveTime() {
         return lastSaveTime;
+    }
+
+    public void setLastSaveTime(){
+        lastSaveTime = LocalDateTime.now();
     }
 
     public String getCollectionType() {

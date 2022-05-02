@@ -1,39 +1,47 @@
 package view.commands;
 
 import controller.CollectionManager;
-import controller.IdManager;
 import controller.exceptions.EmptyCollectionException;
 import model.StudyGroup;
 import view.commands.exceptions.WrongCommandInputException;
-import view.exceptions.IncorrectInputException;
+import view.console.ConsoleClient;
 import view.exceptions.IncorrectScriptException;
 import view.utility.Asker;
-import view.console.ConsoleClient;
 
 import java.util.NoSuchElementException;
 
 public class RemoveGreater extends AbstractCommand{
     CollectionManager collectionManager;
     ConsoleClient consoleClient;
-    public RemoveGreater(CollectionManager collectionManager, ConsoleClient consoleClient) {
+    Asker asker;
+    public RemoveGreater(CollectionManager collectionManager, ConsoleClient consoleClient, Asker asker) {
         super("Remove_greater", "Удалить из коллекции все элементы, превышающие заданный");
         this.collectionManager = collectionManager;
         this.consoleClient = consoleClient;
+        this.asker = asker;
     }
 
     @Override
     public boolean execute(String argument) throws IncorrectScriptException {
-        String input;
+//        String input;
         try{
             if (argument.isEmpty()){
-                ConsoleClient.println("Введите id элемента");
+                StudyGroup group = new StudyGroup(
+                        asker.askName(),
+                        asker.askCoordinates(),
+                        asker.askStudentsCount(),
+                        asker.askAverageMark(),
+                        asker.askFromOfEducation(),
+                        asker.askSemester(),
+                        asker.askPerson());
+//                ConsoleClient.println("Введите id элемента");
 //                if (Asker.getFileMode()){
 //                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
 //                    input = scriptScanner.nextLine().trim();
 //                }else input = scanner.nextLine().trim();
-                int inputInt = Integer.parseInt(consoleClient.readLine());
-                if (!IdManager.containsStudyGroupID(inputInt)) throw new IncorrectInputException();
-                StudyGroup group = collectionManager.getByID(inputInt);
+//                int inputInt = Integer.parseInt(consoleClient.readLine());
+//                if (!IdManager.containsStudyGroupID(inputInt)) throw new IncorrectInputException();
+//                StudyGroup group = collectionManager.getByID(inputInt);
                 collectionManager.removeGreater(group);
                 ConsoleClient.println("Все элементы больше заданного удалены!");
                 return true;
@@ -41,9 +49,9 @@ public class RemoveGreater extends AbstractCommand{
         }catch (EmptyCollectionException exception){
             ConsoleClient.printError("Коллекция пуста!");
             return true;//Не уверен, что так должно быть. Пока что считаю, что пустая коллекция не повод выбрасывать ошибку выполнения
-        }catch (IncorrectInputException exception){
-            ConsoleClient.printError("Такого id не существует!");
-            if (Asker.getFileMode()) throw new IncorrectScriptException();
+//        }catch (IncorrectInputException exception){
+//            ConsoleClient.printError("Такого id не существует!");
+//            if (Asker.getFileMode()) throw new IncorrectScriptException();
         }catch (WrongCommandInputException exception){
             ConsoleClient.printError("Команда " + getName() + " введена с ошибкой: " +
                     "команда не должна содержать символы после своего названия!");

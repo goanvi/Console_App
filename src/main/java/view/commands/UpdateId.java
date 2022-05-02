@@ -3,12 +3,13 @@ package view.commands;
 import controller.CollectionManager;
 import controller.IdManager;
 import controller.exceptions.EmptyCollectionException;
+import model.StudyGroup;
+import view.commands.exceptions.WrongCommandInputException;
+import view.console.ConsoleClient;
 import view.exceptions.IncorrectInputException;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
-import model.StudyGroup;
 import view.utility.Asker;
-import view.console.ConsoleClient;
+
 import java.util.NoSuchElementException;
 
 public class UpdateId extends AbstractCommand{
@@ -26,13 +27,13 @@ public class UpdateId extends AbstractCommand{
     private boolean setNewParameters(StudyGroup studyGroup)throws IncorrectScriptException{
         try {
             ConsoleClient.println("Какие параметры группы вы хотите изменить?\n" +
-                    "Name\n" +
-                    "Coordinates\n" +
-                    "Students count\n" +
-                    "Average mark\n" +
-                    "From of education\n" +
-                    "Semester\n" +
-                    "Group admin");
+                    "Имя\n" +
+                    "Координаты\n" +
+                    "Количество студентов\n" +
+                    "Средняя оценка\n" +
+                    "Форма обучения\n" +
+                    "Семестр\n" +
+                    "Админ группы");
             ConsoleClient.println("Запишите все изменяемые параметры в строчку через запятую");
             String[] parameters = consoleClient.readLine().split(",");
             return asker.changeParameters(parameters, studyGroup);

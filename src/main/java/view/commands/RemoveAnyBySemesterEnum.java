@@ -16,7 +16,7 @@ public class RemoveAnyBySemesterEnum extends AbstractCommand{
     ConsoleClient consoleClient;
 
     public RemoveAnyBySemesterEnum(CollectionManager manager, ConsoleClient consoleClient) {
-        super("Remove_any_by_semester_enum", "Удаляет из коллекции один элемент," +
+        super("Remove_any_by_semester_enum {Три, Пять, Семь}", "Удаляет из коллекции один элемент," +
                 " значение поля semesterEnum которого эквивалентно заданному");
         this.collectionManager = manager;
         this.consoleClient = consoleClient;
@@ -26,15 +26,15 @@ public class RemoveAnyBySemesterEnum extends AbstractCommand{
     public boolean execute(String argument) throws IncorrectScriptException{
         String input;
         try{
-            if (argument.isEmpty()){
-                ConsoleClient.println("Введите семестр обучения");
-                ConsoleClient.println("Доступные семестры обучения: Три, Пять, Семь");
-//                if (Asker.getFileMode()){
-//                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
-//                    input = scriptScanner.nextLine().trim();
-//                }else input = scanner.nextLine().trim();
-                input = consoleClient.readLine();
-                Semester semester = Semester.equals(input);
+            if (!argument.isEmpty()){
+//                ConsoleClient.println("Введите семестр обучения");
+//                ConsoleClient.println("Доступные семестры обучения: Три, Пять, Семь");
+////                if (Asker.getFileMode()){
+////                    Scanner scriptScanner = ConsoleClient.getScriptScanner();
+////                    input = scriptScanner.nextLine().trim();
+////                }else input = scanner.nextLine().trim();
+//                input = consoleClient.readLine();
+                Semester semester = Semester.equals(argument);
                 collectionManager.remove(collectionManager.getAnyBySemesterEnum(semester));
                 ConsoleClient.println("Элемент успешно удален!");
                 return true;

@@ -3,6 +3,7 @@ package controller;
 import view.console.ConsoleClient;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class FileWorker {
     String file;
@@ -12,22 +13,24 @@ public class FileWorker {
     }
 
     public void writer(String data) throws IOException,SecurityException {
-        try (PrintWriter writer = new PrintWriter(file)) {
+        try (PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8)) {
             writer.write(data);
         } catch (FileNotFoundException e) {
-            ConsoleClient.printError("Файл не найден! надо доделать");
-        }
-    }
-
-    public void writer(String data, String file) throws IOException,SecurityException{
-
-        try (PrintWriter writer = new PrintWriter(file)) {
-            writer.write(data);
-        } catch (FileNotFoundException exception) {
+            ConsoleClient.printError("Файл не найден! Попытка создания нового файла");
             createFile(file);
-            writer(data,file);
+            writer(data);
         }
     }
+
+//    public void writer(String data, String file) throws IOException,SecurityException{
+//
+//        try (PrintWriter writer = new PrintWriter(file)) {
+//            writer.write(data);
+//        } catch (FileNotFoundException exception) {
+//            createFile(file);
+//            writer(data,file);
+//        }
+//    }
 
     private void createFile(String file)throws IOException,SecurityException{
         File newFile = new File(file);
