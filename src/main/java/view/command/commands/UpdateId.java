@@ -1,10 +1,11 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
 import controller.IdManager;
 import controller.exceptions.EmptyCollectionException;
 import model.StudyGroup;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.AbstractCommand;
+import view.command.exceptions.WrongCommandInputException;
 import view.console.ConsoleClient;
 import view.exceptions.IncorrectInputException;
 import view.exceptions.IncorrectScriptException;
@@ -12,7 +13,7 @@ import view.utility.Asker;
 
 import java.util.NoSuchElementException;
 
-public class UpdateId extends AbstractCommand{
+public class UpdateId extends AbstractCommand {
     CollectionManager collectionManager;
     ConsoleClient consoleClient;
     Asker asker;

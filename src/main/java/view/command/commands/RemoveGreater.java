@@ -1,16 +1,17 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
 import controller.exceptions.EmptyCollectionException;
 import model.StudyGroup;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.AbstractCommand;
+import view.command.exceptions.WrongCommandInputException;
 import view.console.ConsoleClient;
 import view.exceptions.IncorrectScriptException;
 import view.utility.Asker;
 
 import java.util.NoSuchElementException;
 
-public class RemoveGreater extends AbstractCommand{
+public class RemoveGreater extends AbstractCommand {
     CollectionManager collectionManager;
     ConsoleClient consoleClient;
     Asker asker;

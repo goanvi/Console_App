@@ -1,13 +1,14 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import model.StudyGroup;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
-public class Add extends AbstractCommand{
+public class Add extends AbstractCommand {
     private Asker asker;
     private CollectionManager collectionManager;
 

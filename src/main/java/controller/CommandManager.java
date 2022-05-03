@@ -1,10 +1,11 @@
 package controller;
 
-import view.commands.exceptions.ExecuteCommandException;
+import view.command.AbstractCommand;
+import view.command.exceptions.ExecuteCommandException;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import view.utility.Asker;
-import view.commands.*;
+import view.command.commands.*;
 import view.console.ConsoleClient;
 
 import java.util.*;

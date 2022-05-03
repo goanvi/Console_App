@@ -1,13 +1,14 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
 import controller.exceptions.EmptyCollectionException;
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
-public class SumOfStudentsCount extends AbstractCommand{
+public class SumOfStudentsCount extends AbstractCommand {
     CollectionManager collectionManager;
 
     public SumOfStudentsCount(CollectionManager collectionManager) {

@@ -1,12 +1,14 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
 import controller.exceptions.EmptyCollectionException;
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import model.StudyGroup;
 import view.utility.Asker;
 import view.console.ConsoleClient;
+import view.utility.Formatter;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -37,7 +39,7 @@ public class FilterLessThanStudentsCount extends AbstractCommand {
                 if (output.isEmpty()) ConsoleClient.println("Во всех группах количество человек больше");
                 else {
                     for (StudyGroup group : output) {
-                    ConsoleClient.println(group);
+                    ConsoleClient.println(Formatter.format(group));
                     }
                     ConsoleClient.println("Элементы коллекции успешно выведены!");
                 }

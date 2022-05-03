@@ -1,11 +1,12 @@
-package view.commands;
+package view.command.commands;
 
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
-public class Exit extends AbstractCommand{
+public class Exit extends AbstractCommand {
     public Exit() {
         super("Exit", "Завершает программу (без сохранения в файл)");
     }

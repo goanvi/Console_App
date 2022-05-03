@@ -1,14 +1,15 @@
 
-package view.commands;
+package view.command.commands;
 
 import controller.CommandManager;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.AbstractCommand;
+import view.command.exceptions.WrongCommandInputException;
 import view.console.ConsoleClient;
 import view.exceptions.IncorrectScriptException;
 import view.utility.Asker;
 
 
-public class Help extends AbstractCommand{
+public class Help extends AbstractCommand {
     private CommandManager commandManager;
 
     public Help(CommandManager commandManager) {

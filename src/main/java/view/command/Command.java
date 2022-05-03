@@ -1,4 +1,4 @@
-package view.commands;
+package view.command;
 
 import view.exceptions.IncorrectScriptException;
 

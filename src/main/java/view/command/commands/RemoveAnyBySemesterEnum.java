@@ -1,17 +1,18 @@
-package view.commands;
+package view.command.commands;
 
 import controller.CollectionManager;
 import controller.exceptions.EmptyCollectionException;
 import model.Exceptions.IncorrectNameEnumException;
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import model.Semester;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
 import java.util.NoSuchElementException;
 
-public class RemoveAnyBySemesterEnum extends AbstractCommand{
+public class RemoveAnyBySemesterEnum extends AbstractCommand {
     CollectionManager collectionManager;
     ConsoleClient consoleClient;
 

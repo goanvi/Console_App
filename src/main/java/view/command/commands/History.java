@@ -1,11 +1,12 @@
-package view.commands;
+package view.command.commands;
 
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.WrongCommandInputException;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
-public class History extends  AbstractCommand{
+public class History extends AbstractCommand {
     static private final int HISTORY_BUFFER_SIZE = 11;
     static String[] historyBuffer = new String[HISTORY_BUFFER_SIZE];
 

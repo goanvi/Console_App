@@ -7,6 +7,7 @@ import view.console.ConsoleClient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -40,20 +41,36 @@ public class CollectionManager { //Надо будет дописать loadColl
 
     public void removeGreater(StudyGroup studyGroup) throws EmptyCollectionException {
         if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-        for (StudyGroup group : studyGroupCollection) {
-            if (group.compareTo(studyGroup) > 0) {
+//        for (StudyGroup group : studyGroupCollection) {
+//            if (group.compareTo(studyGroup) > 0) {
+//                IdManager.removeStudyGroupID(group.getID());
+//                studyGroupCollection.remove(group);
+//            }
+//        }
+        Iterator<StudyGroup> iterator = studyGroupCollection.iterator();
+        while(iterator.hasNext()){
+            StudyGroup group = iterator.next();
+            if (group.compareTo(studyGroup)>0){
                 IdManager.removeStudyGroupID(group.getID());
-                studyGroupCollection.remove(group);
+                iterator.remove();
             }
         }
     }
 
     public void removeLower(StudyGroup studyGroup) throws EmptyCollectionException{
         if (studyGroupCollection.size() == 0) throw new EmptyCollectionException();
-        for (StudyGroup group : studyGroupCollection) {
-            if (group.compareTo(studyGroup) < 0) {
+//        for (StudyGroup group : studyGroupCollection) {
+//            if (group.compareTo(studyGroup) < 0) {
+//                IdManager.removeStudyGroupID(group.getID());
+//                studyGroupCollection.remove(group);
+//            }
+//        }
+        Iterator<StudyGroup> iterator = studyGroupCollection.iterator();
+        while(iterator.hasNext()){
+            StudyGroup group = iterator.next();
+            if (group.compareTo(studyGroup)<0){
                 IdManager.removeStudyGroupID(group.getID());
-                studyGroupCollection.remove(group);
+                iterator.remove();
             }
         }
     }

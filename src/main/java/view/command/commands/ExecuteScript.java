@@ -1,8 +1,9 @@
-package view.commands;
+package view.command.commands;
 
+import view.command.AbstractCommand;
 import view.exceptions.IncorrectScriptException;
-import view.commands.exceptions.ScriptLoopingException;
-import view.commands.exceptions.WrongCommandInputException;
+import view.command.exceptions.ScriptLoopingException;
+import view.command.exceptions.WrongCommandInputException;
 import view.utility.Asker;
 import view.console.ConsoleClient;
 
@@ -11,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ExecuteScript extends AbstractCommand{
+public class ExecuteScript extends AbstractCommand {
     private ConsoleClient consoleClient;
 
     public ExecuteScript(ConsoleClient consoleClient) {

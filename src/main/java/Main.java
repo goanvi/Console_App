@@ -1,7 +1,8 @@
 import controller.CollectionManager;
 import controller.CommandManager;
 import controller.FileWorker;
-import view.commands.*;
+import view.command.AbstractCommand;
+import view.command.commands.*;
 import view.console.ConsoleClient;
 import view.utility.Asker;
 
