@@ -1,26 +1,13 @@
 add
-P421
-678
-44
-22
-4.4
-distance
-third
-Y
-seva
-
-85.3
-add
 S44
 34
 2
 19
 3.2
-full time
-fifth
-N
+вечер
+пять
+нет
 info
-execute_script
-Script1.txt
+execute_script Script1.txt
 show
 history
